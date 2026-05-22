@@ -4,6 +4,134 @@ Sistema web desarrollado en **Java con Spring Boot** para la gestión integral d
 
 ---
 
+## Requisitos previos
+
+| Herramienta | Versión mínima | Verificar con |
+|-------------|---------------|---------------|
+| Java JDK | 17 o superior | `java -version` |
+| Maven | 3.8+ | `mvn -version` *(o usar VS Code Extension Pack for Java)* |
+| Cuenta Firebase | — | [console.firebase.google.com](https://console.firebase.google.com) |
+
+---
+
+## Configuración de Firebase (obligatorio antes de ejecutar)
+
+> ⚠️ El archivo `service-account.json` **no está en el repositorio** (seguridad).  
+> Cada integrante del equipo debe obtenerlo y colocarlo manualmente.
+
+**Pasos:**
+
+1. Abre [Firebase Console](https://console.firebase.google.com) → proyecto **creaciones-edimile**
+2. Ícono de engranaje → **Configuración del proyecto** → pestaña **Cuentas de servicio**
+3. Clic en **"Generar nueva clave privada"** → descarga el archivo JSON
+4. Renómbralo exactamente como `service-account.json` y colócalo en:
+   ```
+   src/main/resources/firebase/service-account.json
+   ```
+5. En Firebase Console → **Firestore Database** → verifica que la base de datos esté creada  
+   *(si no existe: "Crear base de datos" → Modo producción → región us-central)*
+
+---
+
+## Cómo ejecutar el proyecto
+
+**Opción A — VS Code (recomendado):**
+1. Abrir la carpeta del proyecto en VS Code
+2. Instalar la extensión **Extension Pack for Java** (si no la tienes)
+3. Abrir `src/main/java/com/creacionesedimile/CreacionesEdimileApplication.java`
+4. Clic en el botón ▶ **Run** que aparece sobre el método `main`
+5. Acceder en el navegador: `http://localhost:8080`
+
+**Opción B — Terminal (si Maven está instalado):**
+```bash
+mvn spring-boot:run
+```
+
+### Credenciales por defecto (primer arranque)
+
+La aplicación crea automáticamente el usuario administrador si Firestore está vacío:
+
+| Campo | Valor |
+|-------|-------|
+| Correo | `admin@creacionesedimile.com` |
+| Contraseña | `Admin123!` |
+| Rol | Administrador |
+
+> ⚠️ Cambia la contraseña tras el primer inicio de sesión.
+
+---
+
+## Módulos implementados
+
+| # | Módulo | Rutas | Estado |
+|---|--------|-------|--------|
+| 1 | Autenticación | `/login`, `/logout` | ✅ Completo |
+| 2 | Dashboard | `/dashboard` | ✅ Completo |
+| 3 | Gestión de usuarios (Admin) | `/admin/usuarios/**` | ✅ Completo |
+| 4 | Recuperar contraseña | `/forgot-password`, `/reset-password` | ✅ Completo |
+| 5 | Perfil de usuario | `/perfil`, `/perfil/configuracion` | ✅ Completo |
+| 6 | Clientes | — | 🔲 Pendiente |
+| 7 | Catálogo de Productos | — | 🔲 Pendiente |
+| 8 | Inventario de Insumos | — | 🔲 Pendiente |
+| 9 | Cotizaciones | — | 🔲 Pendiente |
+| 10 | Ventas | — | 🔲 Pendiente |
+| 11 | Reportes | — | 🔲 Pendiente |
+
+---
+
+## Tecnologías utilizadas
+
+| Capa | Tecnología |
+|------|-----------|
+| Lenguaje | Java 20 |
+| Framework | Spring Boot 3.3.4 |
+| Seguridad | Spring Security 6.x + BCrypt |
+| Base de datos | Firebase Firestore (NoSQL en la nube) |
+| Frontend | Thymeleaf 3.x + Bootstrap 5.3 + Bootstrap Icons |
+| Validación cliente | JavaScript (password-validation.js) |
+
+---
+
+## Estructura del proyecto
+
+```
+src/main/java/com/creacionesedimile/
+├── config/          FirebaseConfig.java, SecurityConfig.java
+├── controller/      AuthController, DashboardController,
+│                    PasswordResetController, PerfilController
+├── init/            DataInitializer.java   ← crea admin al arrancar
+├── model/           Usuario.java, PasswordResetToken.java
+├── repository/      UsuarioRepository.java, PasswordResetTokenRepository.java
+└── service/         UserDetailsServiceImpl, UsuarioService, PasswordResetService
+
+src/main/resources/
+├── firebase/
+│   ├── service-account.json       ← NO está en el repo (ver instrucciones arriba)
+│   └── README.md                  ← Instrucciones detalladas para obtenerlo
+├── templates/
+│   ├── login.html, dashboard.html, forgot-password.html, reset-password.html
+│   ├── fragments/  navbar.html, sidebar.html
+│   ├── admin/usuarios/  lista.html, form.html
+│   └── perfil/  ver.html, configuracion.html
+└── static/
+    ├── css/  custom.css
+    └── js/   password-validation.js
+```
+
+---
+
+## Documentación técnica
+
+| Archivo | Contenido |
+|---------|-----------|
+| [docs/01_Objetivos_Justificacion_Entorno.md](docs/01_Objetivos_Justificacion_Entorno.md) | Objetivos del proyecto |
+| [docs/02_Requerimientos.md](docs/02_Requerimientos.md) | Requerimientos funcionales y no funcionales |
+| [docs/03_Historias_de_Usuario.md](docs/03_Historias_de_Usuario.md) | Historias de usuario |
+| [docs/05_Login_Firebase_Explicacion.md](docs/05_Login_Firebase_Explicacion.md) | Explicación técnica del módulo de autenticación |
+
+
+---
+
 ## Estructura del Repositorio
 
 ```
