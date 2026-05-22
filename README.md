@@ -8,15 +8,48 @@ Sistema web desarrollado en **Java con Spring Boot** para la gestión integral d
 
 ```
 Creaciones-Edimile/
+├── pom.xml                                  ← Build Maven
+├── .gitignore
 ├── README.md
-└── docs/
-    ├── 01_Objetivos_Justificacion_Entorno.md
-    ├── 02_Requerimientos.md
-    ├── 03_Historias_de_Usuario.md
-    └── 04_Base_de_Datos/
-        ├── creaciones_edimile.sql
-        ├── DER.md
-        └── Guia_MySQL_Workbench.md
+├── docs/
+│   ├── 01_Objetivos_Justificacion_Entorno.md
+│   ├── 02_Requerimientos.md
+│   ├── 03_Historias_de_Usuario.md
+│   ├── 04_Base_de_Datos/
+│   │   ├── creaciones_edimile.sql
+│   │   ├── DER.md
+│   │   └── Guia_MySQL_Workbench.md
+│   └── 05_Login_Firebase_Explicacion.md    ← Explicación técnica del módulo login
+└── src/
+    ├── main/
+    │   ├── java/com/creacionesedimile/
+    │   │   ├── CreacionesEdimileApplication.java
+    │   │   ├── config/
+    │   │   │   ├── FirebaseConfig.java      ← Inicialización Firebase + Firestore
+    │   │   │   └── SecurityConfig.java      ← Spring Security (rutas, login, logout)
+    │   │   ├── model/        Usuario.java
+    │   │   ├── repository/   UsuarioRepository.java  ← CRUD en Firestore
+    │   │   ├── service/
+    │   │   │   ├── UserDetailsServiceImpl.java  ← Puente Spring Security ↔ Firestore
+    │   │   │   └── UsuarioService.java
+    │   │   ├── controller/
+    │   │   │   ├── AuthController.java      ← GET /login, GET /403
+    │   │   │   └── DashboardController.java ← Dashboard + admin/usuarios
+    │   │   └── init/  DataInitializer.java  ← Crea admin por defecto al arrancar
+    │   └── resources/
+    │       ├── application.properties
+    │       ├── firebase/
+    │       │   ├── README.md
+    │       │   ├── service-account.json     ← IGNORADO (.gitignore) — debes generarlo
+    │       │   └── service-account-example.json
+    │       ├── templates/
+    │       │   ├── login.html
+    │       │   ├── dashboard.html
+    │       │   ├── fragments/ (navbar, sidebar)
+    │       │   ├── admin/usuarios/ (lista, form)
+    │       │   └── error/ (403)
+    │       └── static/css/custom.css
+    └── test/
 ```
 
 ---
@@ -40,35 +73,55 @@ Creaciones-Edimile/
 | Capa | Tecnología |
 |------|-----------|
 | Lenguaje | Java 17 (LTS) |
-| Framework | Spring Boot 3.x |
-| Seguridad | Spring Security |
-| Persistencia | Spring Data JPA / Hibernate |
-| Base de datos | MySQL 8.x |
-| Frontend | Thymeleaf + Bootstrap 5 |
+| Framework | Spring Boot 3.3.x |
+| Seguridad | Spring Security 6.x |
+| Base de datos | **Firebase Firestore** (NoSQL en la nube) |
+| Frontend | Thymeleaf 3.x + Bootstrap 5.3 |
 | Reportes | iText (PDF) / Apache POI (Excel) |
 | Control de versiones | Git + GitHub |
-| Gestor dependencias | Maven |
+| Gestor dependencias | Maven 3.8+ |
 
 ---
 
 ## Cómo ejecutar el proyecto
 
-> **Requisitos previos**: JDK 17+, Maven 3.8+, MySQL 8.x
+> **Requisitos previos**: JDK 17+, Maven 3.8+, cuenta en Firebase
 
-1. Clonar el repositorio:
-   ```bash
-   git clone https://github.com/TU_USUARIO/creaciones-edimile.git
-   ```
-2. Crear la base de datos ejecutando el script:
-   ```
-   docs/04_Base_de_Datos/creaciones_edimile.sql
-   ```
-3. Configurar `application.properties` con las credenciales de MySQL.
-4. Ejecutar:
-   ```bash
-   mvn spring-boot:run
-   ```
-5. Acceder en: `http://localhost:8080`
+### 1. Clonar el repositorio
+```bash
+git clone https://github.com/TU_USUARIO/creaciones-edimile.git
+cd creaciones-edimile
+```
+
+### 2. Configurar Firebase
+```
+a. Ir a https://console.firebase.google.com
+b. Crear un proyecto (o usar uno existente)
+c. Ir a: Configuración del proyecto → Cuentas de servicio
+d. Hacer clic en "Generar nueva clave privada"
+e. Guardar el archivo como:
+   src/main/resources/firebase/service-account.json
+f. Habilitar Firestore Database en modo producción
+```
+
+### 3. Ejecutar
+```bash
+mvn spring-boot:run
+```
+
+### 4. Acceder
+```
+http://localhost:8080
+```
+
+### Credenciales del administrador por defecto
+
+| Campo | Valor |
+|-------|-------|
+| Correo | `admin@creacionesedimile.com` |
+| Contraseña | `Admin123!` |
+
+> **Cambia la contraseña tras el primer inicio de sesión.**
 
 ---
 

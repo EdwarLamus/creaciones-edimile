@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+
+<!--
+    Fragment: sidebar
+    Uso: <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+    Menú lateral con:
+     - Ítems visibles para todos los usuarios autenticados
+     - Sección "Administración" visible SOLO para el rol ADMIN
+       (controlada con sec:authorize="hasRole('ADMIN')")
+-->
+<nav th:fragment="sidebar" id="sidebar">
+
+    <div class="px-2 pt-2 pb-1">
+        <span class="sidebar-section-title">Módulos</span>
+    </div>
+
+    <ul class="nav flex-column px-2">
+
+        <li class="nav-item">
+            <a class="nav-link sidebar-link" th:href="@{/dashboard}">
+                <i class="bi bi-speedometer2 me-2"></i>Dashboard
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link sidebar-link" th:href="@{/clientes}">
+                <i class="bi bi-people me-2"></i>Clientes
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link sidebar-link" th:href="@{/productos}">
+                <i class="bi bi-box me-2"></i>Productos
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link sidebar-link" th:href="@{/inventario}">
+                <i class="bi bi-clipboard-data me-2"></i>Inventario
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link sidebar-link" th:href="@{/cotizaciones}">
+                <i class="bi bi-file-text me-2"></i>Cotizaciones
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link sidebar-link" th:href="@{/ventas}">
+                <i class="bi bi-cart-check me-2"></i>Ventas
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link sidebar-link" th:href="@{/reportes}">
+                <i class="bi bi-graph-up me-2"></i>Reportes
+            </a>
+        </li>
+
+        <!-- Sección Administración — solo ADMIN -->
+        <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+            <div style="margin: 0.75rem 0.5rem 0;">
+                <hr style="border-color:rgba(255,255,255,0.08); margin-bottom:0.5rem;">
+                <span class="sidebar-section-title" style="padding-left:0.5rem;">Administración</span>
+            </div>
+        </li>
+        <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+            <a class="nav-link sidebar-link" th:href="@{/admin/usuarios}">
+                <i class="bi bi-person-gear me-2"></i>Usuarios
+            </a>
+        </li>
+
+    </ul>
+
+</nav>
+
+        <!-- Dashboard -->
+        <li class="nav-item">
+            <a class="nav-link sidebar-link" th:href="@{/dashboard}">
+                <i class="bi bi-speedometer2 me-2"></i>Dashboard
+            </a>
+        </li>
+
+        <!-- Clientes -->
+        <li class="nav-item">
+            <a class="nav-link sidebar-link" th:href="@{/clientes}">
+                <i class="bi bi-people me-2"></i>Clientes
+            </a>
+        </li>
+
+        <!-- Productos -->
+        <li class="nav-item">
+            <a class="nav-link sidebar-link" th:href="@{/productos}">
+                <i class="bi bi-box me-2"></i>Productos
+            </a>
+        </li>
+
+        <!-- Inventario -->
+        <li class="nav-item">
+            <a class="nav-link sidebar-link" th:href="@{/inventario}">
+                <i class="bi bi-clipboard-data me-2"></i>Inventario
+            </a>
+        </li>
+
+        <!-- Cotizaciones -->
+        <li class="nav-item">
+            <a class="nav-link sidebar-link" th:href="@{/cotizaciones}">
+                <i class="bi bi-file-text me-2"></i>Cotizaciones
+            </a>
+        </li>
+
+        <!-- Ventas -->
+        <li class="nav-item">
+            <a class="nav-link sidebar-link" th:href="@{/ventas}">
+                <i class="bi bi-cart-check me-2"></i>Ventas
+            </a>
+        </li>
+
+        <!-- Reportes -->
+        <li class="nav-item">
+            <a class="nav-link sidebar-link" th:href="@{/reportes}">
+                <i class="bi bi-graph-up me-2"></i>Reportes
+            </a>
+        </li>
+
+        <!-- ======================================
+             SECCIÓN ADMINISTRACIÓN — solo ADMIN
+             sec:authorize ocultará este bloque
+             completo para usuarios con rol VENDEDOR
+             ====================================== -->
+        <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+            <hr class="border-secondary mx-2 my-2">
+            <span class="text-white-50 text-uppercase small fw-bold px-3">
+                Administración
+            </span>
+        </li>
+
+        <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+            <a class="nav-link sidebar-link" th:href="@{/admin/usuarios}">
+                <i class="bi bi-person-gear me-2"></i>Usuarios
+            </a>
+        </li>
+
+    </ul>
+
+</nav>
+
+</body>
+</html>

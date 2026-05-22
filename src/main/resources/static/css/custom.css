@@ -1,0 +1,566 @@
+/* ================================================================
+   Creaciones Edimile — Sistema de diseño
+   Paleta: Negro (#000000) · Blanco (#FFFFFF) · Grises oscuros
+   ================================================================ */
+
+/* ---------------------------------------------------------------
+   Google Fonts — Inter (tipografía limpia y profesional)
+   --------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ---------------------------------------------------------------
+   Variables de diseño
+   --------------------------------------------------------------- */
+:root {
+    /* Colores base */
+    --black:          #000000;
+    --dark:           #0d0d0d;
+    --dark-card:      #111111;
+    --dark-hover:     #1a1a1a;
+    --dark-border:    rgba(255, 255, 255, 0.10);
+    --dark-border-lg: rgba(255, 255, 255, 0.18);
+
+    /* Texto */
+    --text-white:     #FFFFFF;
+    --text-gray:      rgba(255, 255, 255, 0.60);
+    --text-muted:     rgba(255, 255, 255, 0.35);
+
+    /* Contenido (área clara post-login) */
+    --content-bg:     #F7F7F7;
+    --content-border: #E8E8E8;
+
+    /* Layout */
+    --sidebar-width:  248px;
+    --navbar-height:  58px;
+    --radius-card:    14px;
+    --radius-sm:      8px;
+}
+
+/* ---------------------------------------------------------------
+   Reset tipográfico global
+   --------------------------------------------------------------- */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ================================================================
+   LOGIN
+   ================================================================ */
+
+.login-bg {
+    background-color: var(--black);
+    min-height: 100vh;
+}
+
+.login-wrapper {
+    width: 100%;
+    max-width: 460px;
+    padding: 1rem;
+}
+
+.login-card {
+    background-color: var(--dark-card);
+    border: 1px solid var(--dark-border-lg);
+    border-radius: 20px;
+    padding: 2.8rem 2.5rem;
+}
+
+/* Logo en el login */
+.login-logo {
+    max-width: 200px;
+    max-height: 160px;
+    object-fit: contain;
+    /* El logo tiene fondo negro — se fusiona con el fondo de la tarjeta */
+}
+
+/* Fallback monograma si no hay imagen */
+.login-monogram {
+    width: 88px;
+    height: 88px;
+    background: var(--dark-hover);
+    border: 1px solid var(--dark-border-lg);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-white);
+    letter-spacing: -1px;
+}
+
+/* Inputs del login (tema oscuro) */
+.login-card .form-label {
+    color: var(--text-gray);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+/* Contenedor del icono — fondo negro, icono blanco */
+.login-card .input-group-text {
+    background-color: #111111 !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+    border-right: none !important;
+}
+
+.login-card .input-group-text i,
+.login-card .input-group-text .bi {
+    color: #ffffff !important;
+}
+
+/* Campo de texto — fondo blanco, letra negra */
+.login-card .form-control {
+    background-color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+    border-left: none !important;
+    color: #1a1a1a !important;
+}
+
+.login-card .form-control::placeholder {
+    color: rgba(0, 0, 0, 0.35) !important;
+}
+
+.login-card .form-control:focus {
+    background-color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.40) !important;
+    color: #1a1a1a !important;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Botón ojo (mostrar/ocultar contraseña) */
+.login-card .toggle-pwd {
+    background-color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+    border-left: none !important;
+    color: #666666 !important;
+}
+
+/* Autofill del navegador (Chrome/Edge) */
+.login-card .form-control:-webkit-autofill,
+.login-card .form-control:-webkit-autofill:hover,
+.login-card .form-control:-webkit-autofill:focus {
+    -webkit-text-fill-color: #1a1a1a !important;
+    -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+    caret-color: #1a1a1a;
+}
+
+.login-card .toggle-pwd:hover {
+    background-color: #252525;
+    color: var(--text-white);
+}
+
+/* Botón login: blanco con texto negro — máximo contraste */
+.btn-login {
+    background-color: var(--text-white);
+    color: var(--black);
+    border: none;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-login:hover {
+    background-color: rgba(255, 255, 255, 0.90);
+    color: var(--black);
+    transform: translateY(-1px);
+}
+
+.btn-login:active {
+    transform: translateY(0);
+}
+
+/* Alertas en login */
+.login-card .alert-danger {
+    background-color: rgba(220, 53, 69, 0.15);
+    border-color: rgba(220, 53, 69, 0.35);
+    color: #ff8b95;
+}
+
+.login-card .alert-success {
+    background-color: rgba(25, 135, 84, 0.15);
+    border-color: rgba(25, 135, 84, 0.35);
+    color: #75d6a2;
+}
+
+/* ================================================================
+   CRITERIOS DE CONTRASEÑA (tiempo real)
+   ================================================================ */
+
+/* Versión oscura (login, forgot, reset) */
+.criterio {
+    font-size:     0.78rem;
+    padding:       3px 0;
+    color:         rgba(255, 255, 255, 0.40);
+    transition:    color 0.2s;
+    display:       flex;
+    align-items:   center;
+}
+
+.criterio.criterio-ok {
+    color: #6ee7b7;
+}
+
+.criterio.criterio-fail {
+    color: rgba(255, 255, 255, 0.35);
+}
+
+/* Versión clara (perfil — área de contenido blanca) */
+.criterio.criterio-light {
+    color: #9ca3af;
+}
+
+.criterio.criterio-light.criterio-ok {
+    color: #059669;
+}
+
+.criterio.criterio-light.criterio-fail {
+    color: #9ca3af;
+}
+
+
+
+.navbar.fixed-top {
+    height:           var(--navbar-height);
+    background-color: var(--black) !important;
+    border-bottom:    1px solid var(--dark-border);
+    backdrop-filter:  blur(10px);
+}
+
+/* ================================================================
+   SIDEBAR
+   ================================================================ */
+
+#sidebar {
+    width:            var(--sidebar-width);
+    min-height:       100vh;
+    background-color: var(--dark);
+    border-right:     1px solid var(--dark-border);
+    position:         fixed;
+    top:              var(--navbar-height);
+    left:             0;
+    z-index:          1000;
+    overflow-y:       auto;
+    padding-top:      0.75rem;
+}
+
+/* Título de sección en sidebar */
+.sidebar-section-title {
+    color:          var(--text-muted);
+    font-size:      0.65rem;
+    font-weight:    600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding:        0.5rem 1.2rem;
+    margin-top:     0.5rem;
+}
+
+/* Ítems del menú */
+#sidebar .sidebar-link {
+    color:          rgba(255, 255, 255, 0.65);
+    padding:        0.55rem 0.9rem;
+    border-radius:  var(--radius-sm);
+    margin:         2px 8px;
+    font-size:      0.875rem;
+    font-weight:    400;
+    display:        flex;
+    align-items:    center;
+    transition:     background-color 0.15s, color 0.15s;
+}
+
+#sidebar .sidebar-link i {
+    opacity: 0.7;
+    transition: opacity 0.15s;
+}
+
+#sidebar .sidebar-link:hover {
+    color:            var(--text-white);
+    background-color: rgba(255, 255, 255, 0.07);
+}
+
+#sidebar .sidebar-link:hover i {
+    opacity: 1;
+}
+
+#sidebar .sidebar-link.active {
+    color:            var(--black);
+    background-color: var(--text-white);
+    font-weight:      600;
+}
+
+#sidebar .sidebar-link.active i {
+    opacity: 1;
+}
+
+/* ================================================================
+   ÁREA DE CONTENIDO
+   ================================================================ */
+
+#page-content {
+    margin-left:    var(--sidebar-width);
+    padding-top:    calc(var(--navbar-height) + 1.75rem);
+    padding-left:   2rem;
+    padding-right:  2rem;
+    padding-bottom: 2rem;
+    min-height:     100vh;
+    background-color: var(--content-bg);
+}
+
+/* ================================================================
+   TARJETAS DE MÓDULOS (Dashboard)
+   ================================================================ */
+
+.module-card {
+    border-radius:  var(--radius-card);
+    background:     #FFFFFF;
+    border:         1px solid var(--content-border) !important;
+    transition:     transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.module-card:hover {
+    transform:    translateY(-5px);
+    box-shadow:   0 12px 32px rgba(0, 0, 0, 0.10) !important;
+    border-color: #222222 !important;
+}
+
+/* Icono de módulo — monocromático */
+.module-icon {
+    width:         56px;
+    height:        56px;
+    border-radius: 12px;
+    display:       inline-flex;
+    align-items:   center;
+    justify-content: center;
+    background-color: #111111;
+}
+
+.module-icon i {
+    font-size: 1.5rem;
+    color:     #FFFFFF;
+}
+
+/* Botones outline en las tarjetas — todos en negro */
+.module-card .btn-outline-primary,
+.module-card .btn-outline-success,
+.module-card .btn-outline-warning,
+.module-card .btn-outline-info,
+.module-card .btn-outline-danger,
+.module-card .btn-outline-secondary,
+.module-card .btn-outline-dark {
+    color:        #111111;
+    border-color: #111111;
+    font-size:    0.8rem;
+    border-radius: 6px;
+}
+
+.module-card .btn-outline-primary:hover,
+.module-card .btn-outline-success:hover,
+.module-card .btn-outline-warning:hover,
+.module-card .btn-outline-info:hover,
+.module-card .btn-outline-danger:hover,
+.module-card .btn-outline-secondary:hover,
+.module-card .btn-outline-dark:hover {
+    background-color: #111111;
+    border-color:     #111111;
+    color:            #FFFFFF;
+}
+
+/* ================================================================
+   AVATAR EN TABLA DE USUARIOS
+   ================================================================ */
+
+.avatar-circle {
+    width:            36px;
+    height:           36px;
+    border-radius:    50%;
+    display:          inline-flex;
+    align-items:      center;
+    justify-content:  center;
+    font-size:        0.8rem;
+    font-weight:      600;
+    flex-shrink:      0;
+    background-color: #111111;
+    color:            #FFFFFF;
+}
+
+/* ================================================================
+   RESPONSIVE — ocultar sidebar en móvil
+   ================================================================ */
+
+@media (max-width: 767.98px) {
+    #sidebar {
+        width:    0;
+        overflow: hidden;
+        padding:  0;
+    }
+    #page-content {
+        margin-left:  0;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+
+
+/* ---------------------------------------------------------------
+   Variables de color del sistema
+   --------------------------------------------------------------- */
+:root {
+    --sidebar-bg:    #1a1a2e;
+    --sidebar-width: 240px;
+    --accent:        #e94560;
+    --navbar-height: 56px;
+}
+
+/* ---------------------------------------------------------------
+   Navbar superior
+   --------------------------------------------------------------- */
+.navbar.fixed-top {
+    height: var(--navbar-height);
+}
+
+/* ---------------------------------------------------------------
+   Sidebar izquierdo
+   --------------------------------------------------------------- */
+#sidebar {
+    width: var(--sidebar-width);
+    min-height: 100vh;
+    background-color: var(--sidebar-bg);
+    position: fixed;
+    top: var(--navbar-height);
+    left: 0;
+    z-index: 1000;
+    padding-top: 0.5rem;
+    overflow-y: auto;
+}
+
+#sidebar .sidebar-link {
+    color: rgba(255, 255, 255, 0.70);
+    padding: 0.55rem 1rem;
+    border-radius: 8px;
+    margin: 2px 4px;
+    font-size: 0.875rem;
+    transition: background-color 0.15s, color 0.15s;
+}
+
+#sidebar .sidebar-link:hover {
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.10);
+}
+
+#sidebar .sidebar-link.active {
+    color: #fff;
+    background-color: var(--accent);
+}
+
+/* ---------------------------------------------------------------
+   Área de contenido principal
+   --------------------------------------------------------------- */
+#page-content {
+    margin-left: var(--sidebar-width);
+    padding-top: calc(var(--navbar-height) + 1.5rem);
+    min-height: 100vh;
+    background-color: #f8f9fa;
+}
+
+/* ---------------------------------------------------------------
+   Tarjetas de módulos en el Dashboard
+   --------------------------------------------------------------- */
+.module-card {
+    border-radius: 12px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.module-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12) !important;
+}
+
+.module-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.module-icon i {
+    font-size: 1.6rem;
+    color: #fff;
+}
+
+/* Avatar circular en tabla de usuarios */
+.avatar-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+/* ---------------------------------------------------------------
+   Página de Login
+   --------------------------------------------------------------- */
+.login-bg {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+}
+
+.login-wrapper {
+    width: 100%;
+    max-width: 440px;
+    padding: 1rem;
+}
+
+.login-card {
+    border-radius: 18px;
+}
+
+.login-icon {
+    width: 76px;
+    height: 76px;
+    background: linear-gradient(135deg, var(--accent), #0f3460);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-icon i {
+    font-size: 2.2rem;
+    color: #fff;
+}
+
+.btn-login {
+    background: linear-gradient(135deg, var(--accent), #c0392b);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    transition: opacity 0.2s;
+}
+
+.btn-login:hover {
+    opacity: 0.88;
+    color: #fff;
+}
+
+/* ---------------------------------------------------------------
+   Responsive: ocultar sidebar en móvil
+   --------------------------------------------------------------- */
+@media (max-width: 767.98px) {
+    #sidebar {
+        width: 0;
+        overflow: hidden;
+        padding: 0;
+    }
+    #page-content {
+        margin-left: 0;
+    }
+}

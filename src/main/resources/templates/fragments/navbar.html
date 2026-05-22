@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+
+<!--
+    Fragment: navbar
+    Uso: <div th:replace="~{fragments/navbar :: navbar}"></div>
+-->
+<nav th:fragment="navbar"
+     class="navbar navbar-expand-lg navbar-dark fixed-top"
+     style="background-color: #000000; border-bottom: 1px solid rgba(255,255,255,0.08); z-index: 1050;">
+
+    <div class="container-fluid px-4">
+
+        <!-- Logo -->
+        <a class="navbar-brand d-flex align-items-center gap-2" th:href="@{/dashboard}">
+            <img th:src="@{/images/logo.png}"
+                 src="/images/logo.png"
+                 alt="Edimile Creaciones"
+                 style="height:34px; width:auto;"
+                 onerror="this.style.display='none'; document.getElementById('navMonogram').style.display='inline';">
+            <span id="navMonogram"
+                  style="display:none; font-weight:700; font-size:1.1rem; letter-spacing:-0.5px; color:#fff;">
+                CEM
+            </span>
+            <span style="color:rgba(255,255,255,0.55); font-size:0.8rem; font-weight:400;">
+                Creaciones
+            </span>
+        </a>
+
+        <!-- Menú de usuario (dropdown) -->
+        <div class="ms-auto">
+            <div class="dropdown">
+
+                <!-- Trigger — clic en el nombre de usuario -->
+                <button class="btn d-flex align-items-center gap-2 dropdown-toggle"
+                        type="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                        style="background:transparent; border:none; padding:4px 8px; border-radius:8px; color:#fff; transition:background 0.15s;"
+                        onmouseover="this.style.background='rgba(255,255,255,0.07)'"
+                        onmouseout="this.style.background='transparent'">
+
+                    <!-- Avatar circular -->
+                    <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+                         style="width:32px; height:32px; background:rgba(255,255,255,0.10); border:1px solid rgba(255,255,255,0.15);">
+                        <i class="bi bi-person-fill text-white" style="font-size:0.85rem;"></i>
+                    </div>
+
+                    <!-- Email y rol -->
+                    <div class="lh-sm text-start d-none d-md-block">
+                        <div class="small fw-semibold text-white" sec:authentication="name">
+                            usuario@email.com
+                        </div>
+                        <span sec:authorize="hasRole('ADMIN')"
+                              style="font-size:0.65rem; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:0.04em;">
+                            Administrador
+                        </span>
+                        <span sec:authorize="hasRole('VENDEDOR')"
+                              style="font-size:0.65rem; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:0.04em;">
+                            Vendedor
+                        </span>
+                    </div>
+                </button>
+
+                <!-- Menú desplegable -->
+                <ul class="dropdown-menu dropdown-menu-end shadow-lg"
+                    style="min-width:200px; border-radius:10px; border:1px solid rgba(0,0,0,0.10); padding:6px 0; margin-top:6px;">
+
+                    <!-- Cabecera del menú -->
+                    <li class="px-3 py-2">
+                        <div class="small fw-semibold text-dark" sec:authentication="name">
+                            usuario@email.com
+                        </div>
+                        <div>
+                            <span class="badge bg-dark" style="font-size:0.65rem;" sec:authorize="hasRole('ADMIN')">Admin</span>
+                            <span class="badge bg-secondary" style="font-size:0.65rem;" sec:authorize="hasRole('VENDEDOR')">Vendedor</span>
+                        </div>
+                    </li>
+
+                    <li><hr class="dropdown-divider my-1"></li>
+
+                    <!-- Mi perfil -->
+                    <li>
+                        <a class="dropdown-item d-flex align-items-center gap-2 py-2"
+                           th:href="@{/perfil}" style="font-size:0.875rem;">
+                            <i class="bi bi-person-circle text-muted" style="width:16px;"></i>
+                            Mi perfil
+                        </a>
+                    </li>
+
+                    <!-- Configuración (cambio de contraseña) -->
+                    <li>
+                        <a class="dropdown-item d-flex align-items-center gap-2 py-2"
+                           th:href="@{/perfil/configuracion}" style="font-size:0.875rem;">
+                            <i class="bi bi-shield-lock text-muted" style="width:16px;"></i>
+                            Cambiar contraseña
+                        </a>
+                    </li>
+
+                    <li><hr class="dropdown-divider my-1"></li>
+
+                    <!-- Cerrar sesión -->
+                    <li>
+                        <form th:action="@{/logout}" method="post" class="mb-0">
+                            <button type="submit"
+                                    class="dropdown-item d-flex align-items-center gap-2 py-2"
+                                    style="font-size:0.875rem; color:#dc3545;">
+                                <i class="bi bi-box-arrow-right" style="width:16px;"></i>
+                                Cerrar sesión
+                            </button>
+                        </form>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</nav>
+
+</body>
+</html>
