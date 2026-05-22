@@ -255,7 +255,7 @@ http://localhost:8080
 
 ## Equipo de Desarrollo
 
-> Proyecto desarrollado para la materia de **Programación en Java** — 2024
+> Proyecto desarrollado para la materia de **Programación en Java** — 2026
 
 ---
 

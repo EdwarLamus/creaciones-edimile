@@ -208,4 +208,4 @@ Los requerimientos no funcionales describen **cómo debe comportarse el sistema*
 
 ---
 
-*Documento elaborado para la materia de Programación en Java — 2024*
+*Documento elaborado para la materia de Programación en Java — 2026*

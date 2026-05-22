@@ -222,4 +222,4 @@ Este método genera automáticamente el diagrama ER a partir de la base de datos
 
 ---
 
-*Guía elaborada para la materia de Programación en Java — 2024*
+*Guía elaborada para la materia de Programación en Java — 2026*

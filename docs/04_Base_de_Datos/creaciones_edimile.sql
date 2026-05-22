@@ -4,7 +4,7 @@
 -- Proyecto: Sistema Web de Gestión — Creaciones Edimile
 -- Descripción: Script de creación completa de la base de datos
 --              con datos de ejemplo para desarrollo y pruebas.
--- Fecha: 2024
+-- Fecha: 2026
 -- ============================================================
 
 -- ============================================================

@@ -434,4 +434,4 @@ Estimación: [Puntos de historia]
 
 ---
 
-*Documento elaborado para la materia de Programación en Java — 2024*
+*Documento elaborado para la materia de Programación en Java — 2026*
