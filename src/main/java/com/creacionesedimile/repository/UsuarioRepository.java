@@ -140,6 +140,15 @@ public class UsuarioRepository {
         }
     }
 
+    public void delete(String id) {
+        try {
+            firestore.collection(COLLECTION).document(id).delete().get();
+        } catch (ExecutionException | InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new RuntimeException("Error eliminando usuario en Firestore", e);
+        }
+    }
+
     // -------------------------------------------------------
     // Helpers de mapeo
     // -------------------------------------------------------

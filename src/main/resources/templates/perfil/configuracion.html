@@ -30,13 +30,7 @@
                 </div>
             </div>
 
-            <!-- Mensajes de éxito -->
-            <div th:if="${successMsg}"
-                 class="alert alert-success d-flex align-items-center gap-2 mb-4"
-                 style="max-width:560px; border-radius:10px;">
-                <i class="bi bi-check-circle-fill flex-shrink-0"></i>
-                <span th:text="${successMsg}"></span>
-            </div>
+
 
             <!-- Tarjeta de cambio de contraseña -->
             <div class="card border-0 shadow-sm" style="border-radius:12px; max-width:560px;">
@@ -46,14 +40,6 @@
                     </h6>
                 </div>
                 <div class="card-body px-4 py-4">
-
-                    <!-- Error -->
-                    <div th:if="${errorMsg}"
-                         class="alert alert-danger d-flex align-items-center gap-2 py-2 mb-3"
-                         style="border-radius:8px; font-size:0.875rem;">
-                        <i class="bi bi-exclamation-triangle-fill flex-shrink-0"></i>
-                        <span th:text="${errorMsg}"></span>
-                    </div>
 
                     <form th:action="@{/perfil/configuracion}" method="post" novalidate id="perfilForm">
 

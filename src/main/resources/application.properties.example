@@ -33,8 +33,30 @@ spring.thymeleaf.mode=HTML
 server.servlet.session.timeout=30m
 
 # ------------------------------------------------------------
+# Uploads de imágenes (imágenes de productos desde el equipo)
+# ------------------------------------------------------------
+app.uploads.dir=./uploads
+spring.servlet.multipart.max-file-size=5MB
+spring.servlet.multipart.max-request-size=6MB
+
+# ------------------------------------------------------------
 # Logging
 # ------------------------------------------------------------
 logging.level.com.creacionesedimile=DEBUG
 logging.level.org.springframework.security=INFO
 logging.level.com.google.cloud.firestore=WARN
+
+# ------------------------------------------------------------
+# Correo electrónico — Brevo (Sendinblue) SMTP
+# Credenciales obtenidas en: https://app.brevo.com/settings/keys/smtp
+# ------------------------------------------------------------
+spring.mail.host=smtp-relay.brevo.com
+spring.mail.port=587
+spring.mail.username=TU_LOGIN_BREVO@ejemplo.com
+spring.mail.password=TU_SMTP_KEY_DE_BREVO
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+spring.mail.properties.mail.smtp.starttls.required=true
+
+# Nombre de la empresa que aparece como remitente en los correos
+app.nombre=Creaciones Edimile

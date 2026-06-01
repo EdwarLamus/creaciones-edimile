@@ -1,0 +1,12 @@
+# Archivos a excluir del contexto Docker para reducir tamaño de imagen
+target/
+.git/
+.gitignore
+*.md
+docs/
+uploads/
+.mvn/
+mvnw
+mvnw.cmd
+.idea/
+*.iml

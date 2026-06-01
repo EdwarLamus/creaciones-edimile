@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manual de Usuario — Creaciones Edimile</title>
+  <style>
+    /* ── Tipografía y base ─────────────────────────────────────────── */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 11pt;
+      color: #1a1a1a;
+      line-height: 1.6;
+      background: #fff;
+    }
+    a { color: #1a73e8; text-decoration: none; }
+
+    /* ── Portada ───────────────────────────────────────────────────── */
+    .portada {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #000;
+      color: #fff;
+      text-align: center;
+      padding: 60px 40px;
+      page-break-after: always;
+    }
+    .portada .logo-texto {
+      font-size: 48pt;
+      font-weight: 900;
+      letter-spacing: 4px;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .portada .logo-sub {
+      font-size: 14pt;
+      color: #aaa;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 60px;
+    }
+    .portada h1 {
+      font-size: 26pt;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #fff;
+    }
+    .portada .version {
+      font-size: 11pt;
+      color: #888;
+      margin-top: 8px;
+    }
+    .portada .linea {
+      width: 80px;
+      height: 3px;
+      background: #fff;
+      margin: 40px auto;
+    }
+    .portada .meta {
+      font-size: 10pt;
+      color: #aaa;
+      line-height: 2;
+    }
+
+    /* ── Tabla de contenidos ───────────────────────────────────────── */
+    .toc {
+      padding: 60px 80px;
+      page-break-after: always;
+    }
+    .toc h2 {
+      font-size: 20pt;
+      border-bottom: 3px solid #000;
+      padding-bottom: 12px;
+      margin-bottom: 32px;
+    }
+    .toc ol {
+      list-style: none;
+      counter-reset: toc-counter;
+    }
+    .toc > ol > li {
+      counter-increment: toc-counter;
+      margin-bottom: 10px;
+    }
+    .toc > ol > li::before {
+      content: counter(toc-counter) ". ";
+      font-weight: 700;
+      color: #000;
+    }
+    .toc > ol > li > span {
+      font-weight: 700;
+      font-size: 12pt;
+    }
+    .toc ol ol {
+      margin-top: 4px;
+      margin-left: 24px;
+      list-style: none;
+      counter-reset: subtoc;
+    }
+    .toc ol ol li {
+      counter-increment: subtoc;
+      color: #444;
+      font-size: 10pt;
+      margin-bottom: 2px;
+    }
+
+    /* ── Secciones ─────────────────────────────────────────────────── */
+    .seccion {
+      padding: 50px 80px;
+      page-break-before: always;
+    }
+    .seccion:first-of-type { page-break-before: auto; }
+
+    /* ── Encabezados ───────────────────────────────────────────────── */
+    h2.titulo-seccion {
+      font-size: 20pt;
+      font-weight: 900;
+      color: #000;
+      border-left: 6px solid #000;
+      padding-left: 16px;
+      margin-bottom: 28px;
+    }
+    h3 {
+      font-size: 13pt;
+      font-weight: 700;
+      margin-top: 28px;
+      margin-bottom: 10px;
+      color: #111;
+      border-bottom: 1px solid #e0e0e0;
+      padding-bottom: 6px;
+    }
+    h4 {
+      font-size: 11pt;
+      font-weight: 700;
+      margin-top: 18px;
+      margin-bottom: 6px;
+      color: #333;
+    }
+
+    /* ── Párrafos y listas ─────────────────────────────────────────── */
+    p { margin-bottom: 10px; }
+    ul, ol { margin-left: 24px; margin-bottom: 12px; }
+    li { margin-bottom: 4px; }
+
+    /* ── Tablas ────────────────────────────────────────────────────── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 10pt;
+    }
+    th {
+      background: #000;
+      color: #fff;
+      padding: 8px 12px;
+      text-align: left;
+      font-weight: 600;
+    }
+    td {
+      padding: 7px 12px;
+      border-bottom: 1px solid #e8e8e8;
+      vertical-align: top;
+    }
+    tr:nth-child(even) td { background: #f8f8f8; }
+
+    /* ── Notas y avisos ────────────────────────────────────────────── */
+    .nota {
+      background: #f0f7ff;
+      border-left: 4px solid #1a73e8;
+      padding: 12px 16px;
+      margin: 16px 0;
+      font-size: 10pt;
+      border-radius: 0 4px 4px 0;
+    }
+    .aviso {
+      background: #fff8e1;
+      border-left: 4px solid #f9a825;
+      padding: 12px 16px;
+      margin: 16px 0;
+      font-size: 10pt;
+      border-radius: 0 4px 4px 0;
+    }
+    .peligro {
+      background: #fce8e6;
+      border-left: 4px solid #d32f2f;
+      padding: 12px 16px;
+      margin: 16px 0;
+      font-size: 10pt;
+      border-radius: 0 4px 4px 0;
+    }
+    .nota strong, .aviso strong, .peligro strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    /* ── Badge de rol ──────────────────────────────────────────────── */
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 8pt;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .badge-admin { background: #fce8e6; color: #c62828; }
+    .badge-user  { background: #e8f5e9; color: #2e7d32; }
+
+    /* ── Paso a paso numerado ──────────────────────────────────────── */
+    .pasos { list-style: none; counter-reset: paso; margin-left: 0; }
+    .pasos li {
+      counter-increment: paso;
+      display: flex;
+      gap: 14px;
+      margin-bottom: 12px;
+      align-items: flex-start;
+    }
+    .pasos li::before {
+      content: counter(paso);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 26px;
+      height: 26px;
+      background: #000;
+      color: #fff;
+      border-radius: 50%;
+      font-size: 9pt;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* ── Campos de formulario ──────────────────────────────────────── */
+    .campo {
+      display: inline-block;
+      background: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 1px 7px;
+      font-family: monospace;
+      font-size: 9.5pt;
+    }
+
+    /* ── Divisor ───────────────────────────────────────────────────── */
+    hr { border: none; border-top: 1px solid #e0e0e0; margin: 24px 0; }
+
+    /* ── Pie de página ─────────────────────────────────────────────── */
+    .footer-manual {
+      text-align: center;
+      font-size: 9pt;
+      color: #aaa;
+      padding: 30px 80px;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    /* ── Impresión ─────────────────────────────────────────────────── */
+    @media print {
+      body { font-size: 10.5pt; }
+      .seccion { padding: 40px 60px; }
+      .toc { padding: 40px 60px; }
+      h2.titulo-seccion { font-size: 18pt; }
+      .portada { min-height: auto; padding: 80px 60px; }
+      @page { margin: 0; size: A4; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ╔══════════════════════════════════════════════════════╗ -->
+<!-- ║                     PORTADA                         ║ -->
+<!-- ╚══════════════════════════════════════════════════════╝ -->
+<div class="portada">
+  <div class="logo-texto">EDIMILE</div>
+  <div class="logo-sub">Creaciones</div>
+  <h1>Manual de Usuario</h1>
+  <p style="color:#aaa;font-size:12pt;">Sistema de Gestión Empresarial</p>
+  <div class="linea"></div>
+  <div class="meta">
+    Versión 1.0 &nbsp;·&nbsp; 2026<br>
+    Confidencial — Uso interno
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════╗ -->
+<!-- ║               TABLA DE CONTENIDOS                   ║ -->
+<!-- ╚══════════════════════════════════════════════════════╝ -->
+<div class="toc">
+  <h2>Tabla de Contenidos</h2>
+  <ol>
+    <li><span>Introducción al Sistema</span>
+      <ol>
+        <li>¿Qué es Creaciones Edimile?</li>
+        <li>Requisitos de acceso</li>
+        <li>Roles de usuario</li>
+      </ol>
+    </li>
+    <li><span>Acceso al Sistema</span>
+      <ol>
+        <li>Iniciar sesión</li>
+        <li>Recuperar contraseña</li>
+        <li>Restablecer contraseña</li>
+        <li>Cerrar sesión</li>
+      </ol>
+    </li>
+    <li><span>Panel de Control (Dashboard)</span>
+      <ol>
+        <li>Resumen general</li>
+        <li>Navegación principal</li>
+      </ol>
+    </li>
+    <li><span>Gestión de Clientes</span>
+      <ol>
+        <li>Listado de clientes</li>
+        <li>Registrar nuevo cliente</li>
+        <li>Editar cliente</li>
+        <li>Buscar cliente</li>
+      </ol>
+    </li>
+    <li><span>Gestión de Productos</span>
+      <ol>
+        <li>Listado de productos</li>
+        <li>Catálogo visual</li>
+        <li>Registrar nuevo producto</li>
+        <li>Editar producto</li>
+        <li>Activar / Desactivar producto</li>
+        <li>Gestión de categorías</li>
+      </ol>
+    </li>
+    <li><span>Cotizaciones</span>
+      <ol>
+        <li>Listado de cotizaciones</li>
+        <li>Crear nueva cotización</li>
+        <li>Ver detalle de cotización</li>
+        <li>Descargar cotización en PDF</li>
+        <li>Convertir cotización en venta</li>
+        <li>Estados de cotización</li>
+      </ol>
+    </li>
+    <li><span>Ventas</span>
+      <ol>
+        <li>Listado de ventas</li>
+        <li>Registrar venta directa</li>
+        <li>Venta desde cotización</li>
+        <li>Ver detalle de venta</li>
+        <li>Descargar factura en PDF</li>
+        <li>Exportar a Excel</li>
+        <li>Estados de venta</li>
+      </ol>
+    </li>
+    <li><span>Gastos</span>
+      <ol>
+        <li>Listado de gastos</li>
+        <li>Registrar nuevo gasto</li>
+        <li>Categorías de gasto</li>
+        <li>Exportar a Excel</li>
+      </ol>
+    </li>
+    <li><span>Inventario de Insumos</span>
+      <ol>
+        <li>Listado de insumos</li>
+        <li>Registrar nuevo insumo</li>
+        <li>Registrar movimiento de stock</li>
+        <li>Historial de movimientos</li>
+        <li>Alerta de stock bajo</li>
+        <li>Exportar a Excel</li>
+      </ol>
+    </li>
+    <li><span>Reportes</span>
+      <ol>
+        <li>Resumen del período</li>
+        <li>Reporte de ventas</li>
+        <li>Reporte de gastos</li>
+      </ol>
+    </li>
+    <li><span>Perfil de Usuario</span>
+      <ol>
+        <li>Ver perfil</li>
+        <li>Cambiar contraseña</li>
+      </ol>
+    </li>
+    <li><span>Administración de Usuarios</span> <span class="badge badge-admin">Solo ADMIN</span>
+      <ol>
+        <li>Listado de usuarios</li>
+        <li>Crear nuevo usuario</li>
+        <li>Editar usuario</li>
+        <li>Activar / Desactivar usuario</li>
+      </ol>
+    </li>
+  </ol>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- 1. INTRODUCCIÓN                                        -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="seccion">
+  <h2 class="titulo-seccion">1. Introducción al Sistema</h2>
+
+  <h3>1.1 ¿Qué es Creaciones Edimile?</h3>
+  <p>
+    Creaciones Edimile es un sistema de gestión empresarial diseñado para apoyar las operaciones
+    comerciales de la empresa. Permite administrar de forma centralizada clientes, productos,
+    cotizaciones, ventas, gastos e inventario de insumos, además de generar reportes financieros
+    y documentos en PDF listos para entregar al cliente.
+  </p>
+  <p>
+    El sistema es accesible desde cualquier dispositivo con navegador web (computador, tablet o
+    celular) a través de la dirección:
+  </p>
+  <p style="text-align:center;margin:20px 0;">
+    <strong style="font-size:13pt;">https://creaciones-edimile.web.app</strong>
+  </p>
+
+  <h3>1.2 Requisitos de acceso</h3>
+  <table>
+    <thead><tr><th>Requisito</th><th>Detalle</th></tr></thead>
+    <tbody>
+      <tr><td>Navegador</td><td>Google Chrome, Firefox, Edge o Safari (versión reciente)</td></tr>
+      <tr><td>Conexión a internet</td><td>Requerida para todas las operaciones</td></tr>
+      <tr><td>Credenciales</td><td>Email y contraseña asignados por el administrador</td></tr>
+    </tbody>
+  </table>
+
+  <h3>1.3 Roles de usuario</h3>
+  <p>El sistema maneja dos roles con diferentes niveles de acceso:</p>
+  <table>
+    <thead><tr><th>Rol</th><th>Descripción</th><th>Acceso adicional</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="badge badge-user">EMPLEADO</span></td>
+        <td>Acceso a todas las funciones operativas: clientes, productos, cotizaciones, ventas, gastos, inventario y reportes.</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-admin">ADMIN</span></td>
+        <td>Todo lo anterior, más gestión completa de usuarios del sistema y administración de categorías de productos.</td>
+        <td>Módulo de Administración de Usuarios, Gestión de Categorías</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="aviso">
+    <strong>Nota de seguridad</strong>
+    No comparta sus credenciales de acceso con otras personas. Cada usuario debe tener su propio
+    email y contraseña. El sistema registra quién creó cada cotización, venta y gasto.
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- 2. ACCESO AL SISTEMA                                   -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="seccion">
+  <h2 class="titulo-seccion">2. Acceso al Sistema</h2>
+
+  <h3>2.1 Iniciar sesión</h3>
+  <p>Para ingresar al sistema siga estos pasos:</p>
+  <ol class="pasos">
+    <li>Abra su navegador y vaya a <strong>https://creaciones-edimile.web.app</strong></li>
+    <li>Ingrese su <span class="campo">Correo electrónico</span> en el primer campo.</li>
+    <li>Ingrese su <span class="campo">Contraseña</span> en el segundo campo.</li>
+    <li>Haga clic en el botón <strong>Ingresar</strong>.</li>
+    <li>Si las credenciales son correctas, será redirigido al Panel de Control.</li>
+  </ol>
+
+  <div class="nota">
+    <strong>Sesión automática</strong>
+    La sesión expira automáticamente después de 30 minutos de inactividad. Al expirar, será
+    redirigido a la pantalla de inicio de sesión.
+  </div>
+
+  <h3>2.2 Recuperar contraseña</h3>
+  <p>Si olvidó su contraseña:</p>
+  <ol class="pasos">
+    <li>En la pantalla de login, haga clic en el enlace <strong>"¿Olvidaste tu contraseña?"</strong></li>
+    <li>Ingrese su <span class="campo">Correo electrónico</span> registrado en el sistema.</li>
+    <li>Haga clic en <strong>Enviar enlace de recuperación</strong>.</li>
+    <li>Recibirá un correo de <em>Creaciones Edimile</em> con un enlace para restablecer su contraseña.</li>
+    <li>Revise también la carpeta de <strong>Spam / Correo no deseado</strong> si no lo encuentra.</li>
+  </ol>
+  <div class="aviso">
+    <strong>Enlace con vigencia limitada</strong>
+    El enlace de recuperación es válido por <strong>1 hora</strong>. Si vence, repita el proceso.
+  </div>
+
+  <h3>2.3 Restablecer contraseña</h3>
+  <p>Al hacer clic en el enlace recibido por correo:</p>
+  <ol class="pasos">
+    <li>Se abrirá el formulario de <strong>Nueva contraseña</strong>.</li>
+    <li>Ingrese su nueva contraseña. Debe cumplir todos los criterios de seguridad:</li>
+  </ol>
+  <table>
+    <thead><tr><th>Requisito</th><th>Descripción</th></tr></thead>
+    <tbody>
+      <tr><td>Longitud</td><td>Mínimo 8 caracteres</td></tr>
+      <tr><td>Mayúscula</td><td>Al menos una letra mayúscula (A–Z)</td></tr>
+      <tr><td>Número</td><td>Al menos un dígito (0–9)</td></tr>
+      <tr><td>Carácter especial</td><td>Al menos uno: ! @ # $ % ^ &amp; * ( ) etc.</td></tr>
+    </tbody>
+  </table>
+  <ol class="pasos" start="3">
+    <li>Confirme la contraseña en el segundo campo.</li>
+    <li>Haga clic en <strong>Restablecer contraseña</strong>.</li>
+    <li>Será redirigido al login con un mensaje de confirmación.</li>
+  </ol>
+
+  <h3>2.4 Cerrar sesión</h3>
+  <p>
+    Haga clic en su nombre/foto de perfil en la barra superior derecha y seleccione
+    <strong>Cerrar sesión</strong>. También puede hacer clic en el ícono de salida en la barra
+    de navegación lateral.
+  </p>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- 3. DASHBOARD                                           -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="seccion">
+  <h2 class="titulo-seccion">3. Panel de Control (Dashboard)</h2>
+
+  <h3>3.1 Resumen general</h3>
+  <p>
+    Al ingresar al sistema, la pantalla principal muestra un saludo personalizado con su nombre
+    y el resumen del estado actual del negocio. El dashboard incluye tarjetas con indicadores
+    clave y accesos directos a las funciones más utilizadas.
+  </p>
+  <table>
+    <thead><tr><th>Elemento</th><th>Descripción</th></tr></thead>
+    <tbody>
+      <tr><td>Bienvenida</td><td>Muestra su nombre y rol dentro del sistema</td></tr>
+      <tr><td>Tarjetas de resumen</td><td>Totales rápidos de ventas, cotizaciones pendientes y alertas de inventario</td></tr>
+      <tr><td>Accesos directos</td><td>Botones para las acciones más frecuentes</td></tr>
+    </tbody>
+  </table>
+
+  <h3>3.2 Navegación principal</h3>
+  <p>
+    El sistema cuenta con dos elementos de navegación permanentes:
+  </p>
+  <ul>
+    <li><strong>Barra superior (Navbar)</strong>: contiene el logo de la empresa, botón para colapsar el menú lateral y acceso al perfil de usuario.</li>
+    <li><strong>Menú lateral (Sidebar)</strong>: lista todos los módulos del sistema. En dispositivos móviles se puede ocultar/mostrar deslizando o tocando el botón de menú.</li>
+  </ul>
+  <table>
+    <thead><tr><th>Módulo en el menú</th><th>Acceso</th></tr></thead>
+    <tbody>
+      <tr><td>Dashboard</td><td>Panel de control principal</td></tr>
+      <tr><td>Clientes</td><td>Gestión de clientes</td></tr>
+      <tr><td>Productos</td><td>Catálogo, lista y categorías</td></tr>
+      <tr><td>Cotizaciones</td><td>Crear y gestionar cotizaciones</td></tr>
+      <tr><td>Ventas</td><td>Registro y seguimiento de ventas</td></tr>
+      <tr><td>Gastos</td><td>Control de egresos</td></tr>
+      <tr><td>Inventario</td><td>Gestión de insumos y stock</td></tr>
+      <tr><td>Reportes</td><td>Informes financieros por período</td></tr>
+      <tr><td>Administración</td><td>Gestión de usuarios <span class="badge badge-admin">Solo ADMIN</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- 4. CLIENTES                                            -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="seccion">
+  <h2 class="titulo-seccion">4. Gestión de Clientes</h2>
+
+  <h3>4.1 Listado de clientes</h3>
+  <p>
+    Acceda a <strong>Clientes</strong> en el menú lateral. Verá la tabla con todos los clientes
+    registrados. Las columnas incluyen: nombre completo, tipo de documento, número de documento,
+    teléfono, ciudad y acciones disponibles.
+  </p>
+
+  <h3>4.2 Registrar nuevo cliente</h3>
+  <ol class="pasos">
+    <li>Haga clic en el botón <strong>+ Nuevo Cliente</strong>.</li>
+    <li>Complete el formulario con los datos del cliente:</li>
+  </ol>
+  <table>
+    <thead><tr><th>Campo</th><th>Requerido</th><th>Descripción</th></tr></thead>
+    <tbody>
+      <tr><td>Nombre</td><td>Sí</td><td>Nombre(s) del cliente o razón social</td></tr>
+      <tr><td>Apellido</td><td>Sí</td><td>Apellido(s) del cliente</td></tr>
+      <tr><td>Tipo de documento</td><td>Sí</td><td>CC, NIT, CE, Pasaporte</td></tr>
+      <tr><td>Número de documento</td><td>Sí</td><td>Número de identificación</td></tr>
+      <tr><td>Email</td><td>No</td><td>Correo electrónico del cliente</td></tr>
+      <tr><td>Teléfono</td><td>No</td><td>Número de contacto</td></tr>
+      <tr><td>Ciudad</td><td>No</td><td>Ciudad de residencia o empresa</td></tr>
+      <tr><td>Dirección</td><td>No</td><td>Dirección completa</td></tr>
+      <tr><td>Notas</td><td>No</td><td>Observaciones adicionales sobre el cliente</td></tr>
+    </tbody>
+  </table>
+  <ol class="pasos" start="3">
+    <li>Haga clic en <strong>Guardar</strong> para registrar el cliente.</li>
+  </ol>
+
+  <h3>4.3 Editar cliente</h3>
+  <p>
+    En la lista de clientes, haga clic en el ícono de <strong>lápiz (editar)</strong> junto al
+    cliente que desea modificar. Realice los cambios necesarios y haga clic en <strong>Guardar</strong>.
+  </p>
+
+  <h3>4.4 Buscar cliente</h3>
+  <p>
+    Use la barra de búsqueda en la parte superior de la lista. Puede buscar por nombre, apellido,
+    número de documento, email o ciudad. La búsqueda se ejecuta al escribir y presionar Enter
+    o hacer clic en el ícono de lupa.
+  </p>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- 5. PRODUCTOS                                           -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="seccion">
+  <h2 class="titulo-seccion">5. Gestión de Productos</h2>
+
+  <h3>5.1 Listado de productos</h3>
+  <p>
+    Acceda a <strong>Productos</strong> en el menú. La vista de lista muestra todos los productos
+    con su nombre, categoría, precio de venta, estado (activo/inactivo) y opciones de acción.
+    Puede filtrar por categoría usando el selector desplegable o buscar por nombre.
+  </p>
+
+  <h3>5.2 Catálogo visual</h3>
+  <p>
+    Haga clic en <strong>Catálogo</strong> para ver los productos en formato de tarjetas con
+    imagen, nombre, categoría y precio. Esta vista es ideal para mostrar el portafolio al cliente.
+    Solo se muestran productos activos.
+  </p>
+
+  <h3>5.3 Registrar nuevo producto</h3>
+  <ol class="pasos">
+    <li>Haga clic en <strong>+ Nuevo Producto</strong>.</li>
+    <li>Complete el formulario:</li>
+  </ol>
+  <table>
+    <thead><tr><th>Campo</th><th>Requerido</th><th>Descripción</th></tr></thead>
+    <tbody>
+      <tr><td>Nombre</td><td>Sí</td><td>Nombre del producto o servicio</td></tr>
+      <tr><td>Descripción</td><td>No</td><td>Descripción detallada del producto</td></tr>
+      <tr><td>Categoría</td><td>Sí</td><td>Categoría a la que pertenece el producto</td></tr>
+      <tr><td>Precio de venta</td><td>Sí</td><td>Precio unitario de venta al público</td></tr>
+      <tr><td>Imagen</td><td>No</td><td>Foto del producto (JPG, PNG, máx. 5 MB)</td></tr>
+    </tbody>
+  </table>
+  <ol class="pasos" start="3">
+    <li>Haga clic en <strong>Guardar</strong>.</li>
+  </ol>
+
+  <h3>5.4 Editar producto</h3>
+  <p>
+    En la lista de productos, haga clic en el ícono de <strong>lápiz</strong>. Modifique los
+    campos necesarios. Si sube una nueva imagen, reemplazará la anterior automáticamente.
+  </p>
+
+  <h3>5.5 Activar / Desactivar producto</h3>
+  <p>
+    Use el interruptor de estado en la lista o haga clic en el botón correspondiente en el
+    formulario de edición. Los productos inactivos no aparecen en el catálogo ni pueden
+    añadirse a nuevas cotizaciones o ventas.
+  </p>
+
+  <h3>5.6 Gestión de categorías <span class="badge badge-admin">Solo ADMIN</span></h3>
+  <p>
+    Acceda a <strong>Productos → Categorías</strong>. Desde aquí puede:
+  </p>
+  <ul>
+    <li>Ver todas las categorías existentes.</li>
+    <li>Crear una nueva categoría haciendo clic en <strong>+ Nueva Categoría</strong>.</li>
+    <li>Editar el nombre de una categoría existente.</li>
+    <li>Activar o desactivar categorías. Las categorías inactivas no aparecen en los formularios.</li>
+  </ul>
+  <div class="aviso">
+    <strong>Precaución</strong>
+    Si desactiva una categoría que tiene productos asociados, esos productos seguirán existiendo
+    pero la categoría no podrá ser seleccionada en nuevos registros.
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- 6. COTIZACIONES                                        -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="seccion">
+  <h2 class="titulo-seccion">6. Cotizaciones</h2>
+
+  <h3>6.1 Listado de cotizaciones</h3>
+  <p>
+    Acceda a <strong>Cotizaciones</strong> en el menú. Verá todas las cotizaciones registradas
+    con su número, cliente, fecha, total, estado y opciones de acción. Puede filtrar por estado
+    o buscar por número de cotización o nombre de cliente.
+  </p>
+
+  <h3>6.2 Crear nueva cotización</h3>
+  <ol class="pasos">
+    <li>Haga clic en <strong>+ Nueva Cotización</strong>.</li>
+    <li>Seleccione el <span class="campo">Cliente</span> de la lista desplegable.</li>
+    <li>El sistema asigna automáticamente la fecha y el número de cotización.</li>
+    <li>Añada los productos/servicios haciendo clic en <strong>+ Añadir ítem</strong>:</li>
+  </ol>
+  <table>
+    <thead><tr><th>Campo por ítem</th><th>Descripción</th></tr></thead>
+    <tbody>
+      <tr><td>Producto</td><td>Seleccione de la lista de productos activos</td></tr>
+      <tr><td>Descripción personalizada</td><td>Puede modificar el texto que aparecerá en el PDF</td></tr>
+      <tr><td>Cantidad</td><td>Unidades del producto</td></tr>
+      <tr><td>Precio unitario</td><td>Se llena automáticamente; puede modificarse</td></tr>
+      <tr><td>Subtotal</td><td>Calculado automáticamente (cantidad × precio)</td></tr>
+    </tbody>
+  </table>
+  <ol class="pasos" start="5">
+    <li>Repita el paso anterior para añadir más ítems.</li>
+    <li>El <strong>Total</strong> se actualiza automáticamente al final.</li>
+    <li>Agregue <span class="campo">Notas o condiciones</span> si es necesario (texto libre).</li>
+    <li>Haga clic en <strong>Guardar Cotización</strong>.</li>
+  </ol>
+
+  <h3>6.3 Ver detalle de cotización</h3>
+  <p>
+    Haga clic en el ícono de <strong>ojo</strong> o en el número de cotización para ver el
+    detalle completo: cliente, ítems, totales, vendedor que la generó, fecha y estado actual.
+  </p>
+
+  <h3>6.4 Descargar cotización en PDF</h3>
+  <p>
+    Desde el detalle de la cotización, haga clic en <strong>Descargar PDF</strong>. El sistema
+    genera un documento profesional con el membrete de Creaciones Edimile, datos del cliente,
+    tabla de productos/servicios, total y firma del vendedor. El archivo se descarga
+    automáticamente.
+  </p>
+
+  <h3>6.5 Convertir cotización en venta</h3>
+  <p>
+    Cuando el cliente acepta la cotización:
+  </p>
+  <ol class="pasos">
+    <li>Abra el detalle de la cotización.</li>
+    <li>Haga clic en <strong>Convertir a Venta</strong>.</li>
+    <li>Confirme o ajuste los datos de la venta (método de pago, etc.).</li>
+    <li>Haga clic en <strong>Registrar Venta</strong>.</li>
+    <li>La cotización cambia automáticamente a estado <em>Aceptada</em>.</li>
+  </ol>
+
+  <h3>6.6 Estados de cotización</h3>
+  <table>
+    <thead><tr><th>Estado</th><th>Significado</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Pendiente</strong></td><td>Cotización enviada al cliente, esperando respuesta</td></tr>
+      <tr><td><strong>Aceptada</strong></td><td>Cliente aprobó. Se generó o puede generar la venta</td></tr>
+      <tr><td><strong>Rechazada</strong></td><td>Cliente no aceptó la cotización</td></tr>
+      <tr><td><strong>Vencida</strong></td><td>El plazo de la cotización expiró sin respuesta</td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- 7. VENTAS                                              -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="seccion">
+  <h2 class="titulo-seccion">7. Ventas</h2>
+
+  <h3>7.1 Listado de ventas</h3>
+  <p>
+    Acceda a <strong>Ventas</strong> en el menú. La tabla muestra todas las ventas con número,
+    cliente, fecha, total, estado y opciones de acción. Puede filtrar por estado o buscar
+    por número o cliente.
+  </p>
+
+  <h3>7.2 Registrar venta directa</h3>
+  <p>Use este flujo cuando el cliente compra sin cotización previa:</p>
+  <ol class="pasos">
+    <li>Haga clic en <strong>+ Nueva Venta</strong>.</li>
+    <li>Seleccione el <span class="campo">Cliente</span>.</li>
+    <li>Seleccione el <span class="campo">Método de pago</span>: Efectivo, Transferencia, Tarjeta, etc.</li>
+    <li>Añada los ítems de la venta (mismo proceso que en cotizaciones).</li>
+    <li>Revise el total y haga clic en <strong>Registrar Venta</strong>.</li>
+  </ol>
+
+  <h3>7.3 Venta desde cotización</h3>
+  <p>
+    Desde el listado de cotizaciones, ubique la cotización <em>Aceptada</em> y haga clic en
+    <strong>Convertir a Venta</strong>. El formulario se pre-llena con todos los datos de la
+    cotización. Confirme y guarde.
+  </p>
+
+  <h3>7.4 Ver detalle de venta</h3>
+  <p>
+    Haga clic en el ícono de ojo o en el número de venta para ver el detalle completo:
+    cliente, ítems, total, método de pago, vendedor y estado.
+  </p>
+
+  <h3>7.5 Descargar factura en PDF</h3>
+  <p>
+    Desde el detalle de la venta, haga clic en <strong>Descargar Factura</strong>. Se genera
+    un PDF con todos los datos de la transacción, listo para entregar al cliente.
+  </p>
+
+  <h3>7.6 Exportar a Excel</h3>
+  <p>
+    En el listado de ventas, haga clic en <strong>Exportar Excel</strong>. Se descarga un
+    archivo <em>.xlsx</em> con todas las ventas (con sus filtros aplicados si los hay), con
+    columnas: número, cliente, fecha, ítems, total, método de pago, estado y vendedor.
+  </p>
+
+  <h3>7.7 Estados de venta</h3>
+  <table>
+    <thead><tr><th>Estado</th><th>Significado</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Pendiente</strong></td><td>Venta registrada, pago por confirmar</td></tr>
+      <tr><td><strong>Pagada</strong></td><td>Pago recibido y confirmado</td></tr>
+      <tr><td><strong>Cancelada</strong></td><td>Venta anulada</td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- 8. GASTOS                                              -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="seccion">
+  <h2 class="titulo-seccion">8. Gastos</h2>
+
+  <h3>8.1 Listado de gastos</h3>
+  <p>
+    Acceda a <strong>Gastos</strong> en el menú. La tabla muestra todos los gastos registrados
+    con fecha, descripción, categoría, total y vendedor/usuario que lo registró. Al pie de la
+    tabla aparece la <strong>suma total</strong> de los gastos visibles (con el filtro activo).
+  </p>
+  <p>
+    Puede filtrar por categoría usando el selector desplegable o buscar por descripción.
+  </p>
+
+  <h3>8.2 Registrar nuevo gasto</h3>
+  <ol class="pasos">
+    <li>Haga clic en <strong>+ Nuevo Gasto</strong>.</li>
+    <li>Complete el formulario:</li>
+  </ol>
+  <table>
+    <thead><tr><th>Campo</th><th>Requerido</th><th>Descripción</th></tr></thead>
+    <tbody>
+      <tr><td>Descripción</td><td>Sí</td><td>Detalle del gasto realizado</td></tr>
+      <tr><td>Categoría</td><td>Sí</td><td>Tipo de gasto (ver tabla abajo)</td></tr>
+      <tr><td>Total</td><td>Sí</td><td>Monto total del gasto en pesos</td></tr>
+      <tr><td>Fecha</td><td>Sí</td><td>Fecha en que se realizó el gasto</td></tr>
+      <tr><td>Notas</td><td>No</td><td>Observaciones adicionales</td></tr>
+    </tbody>
+  </table>
+  <ol class="pasos" start="3">
+    <li>Haga clic en <strong>Guardar</strong>.</li>
+  </ol>
+
+  <h3>8.3 Categorías de gasto</h3>
+  <table>
+    <thead><tr><th>Categoría</th><th>Uso típico</th></tr></thead>
+    <tbody>
+      <tr><td>Materia prima</td><td>Compra de insumos o materiales para producción</td></tr>
+      <tr><td>Servicios</td><td>Agua, luz, internet, arriendo</td></tr>
+      <tr><td>Transporte</td><td>Envíos, fletes, gasolina</td></tr>
+      <tr><td>Nómina</td><td>Pagos de salarios y prestaciones</td></tr>
+      <tr><td>Equipos</td><td>Compra o mantenimiento de maquinaria</td></tr>
+      <tr><td>Marketing</td><td>Publicidad, redes sociales, material promocional</td></tr>
+      <tr><td>Otros</td><td>Gastos que no clasifican en las anteriores</td></tr>
+    </tbody>
+  </table>
+
+  <h3>8.4 Exportar a Excel</h3>
+  <p>
+    Haga clic en <strong>Exportar Excel</strong> para descargar todos los gastos en formato
+    <em>.xlsx</em> con las columnas: fecha, descripción, categoría, total, notas y usuario.
+  </p>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- 9. INVENTARIO                                          -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="seccion">
+  <h2 class="titulo-seccion">9. Inventario de Insumos</h2>
+  <p>
+    El módulo de inventario permite controlar el stock de materias primas e insumos utilizados
+    en la producción de los productos de Creaciones Edimile.
+  </p>
+
+  <h3>9.1 Listado de insumos</h3>
+  <p>
+    Acceda a <strong>Inventario</strong>. La tabla muestra todos los insumos con nombre,
+    unidad de medida, stock actual, stock mínimo, precio unitario y estado del stock.
+    Si hay insumos con stock bajo, aparece una alerta en la parte superior con la cantidad
+    de ítems afectados.
+  </p>
+
+  <h3>9.2 Registrar nuevo insumo</h3>
+  <ol class="pasos">
+    <li>Haga clic en <strong>+ Nuevo Insumo</strong>.</li>
+    <li>Complete el formulario:</li>
+  </ol>
+  <table>
+    <thead><tr><th>Campo</th><th>Requerido</th><th>Descripción</th></tr></thead>
+    <tbody>
+      <tr><td>Nombre</td><td>Sí</td><td>Nombre del insumo o materia prima</td></tr>
+      <tr><td>Descripción</td><td>No</td><td>Detalles adicionales del insumo</td></tr>
+      <tr><td>Unidad de medida</td><td>Sí</td><td>Kg, metros, litros, unidades, etc.</td></tr>
+      <tr><td>Stock actual</td><td>No</td><td>Cantidad inicial disponible</td></tr>
+      <tr><td>Stock mínimo</td><td>No</td><td>Umbral para alerta de bajo stock</td></tr>
+      <tr><td>Precio unitario</td><td>No</td><td>Costo por unidad de medida</td></tr>
+    </tbody>
+  </table>
+  <ol class="pasos" start="3">
+    <li>Haga clic en <strong>Guardar</strong>.</li>
+  </ol>
+
+  <h3>9.3 Registrar movimiento de stock</h3>
+  <p>
+    Los movimientos registran entradas (compras) y salidas (uso en producción) del inventario.
+  </p>
+  <ol class="pasos">
+    <li>En la lista de insumos, haga clic en el ícono de <strong>movimiento</strong> del insumo correspondiente.</li>
+    <li>Seleccione el tipo de movimiento:</li>
+  </ol>
+  <table>
+    <thead><tr><th>Tipo</th><th>Descripción</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Entrada</strong></td><td>Compra o recepción de insumos (aumenta el stock)</td></tr>
+      <tr><td><strong>Salida</strong></td><td>Uso en producción o pérdida (disminuye el stock)</td></tr>
+      <tr><td><strong>Ajuste</strong></td><td>Corrección manual del inventario</td></tr>
+    </tbody>
+  </table>
+  <ol class="pasos" start="3">
+    <li>Ingrese la <span class="campo">Cantidad</span> del movimiento.</li>
+    <li>Agregue una <span class="campo">Nota</span> descriptiva (ej: "Compra proveedor X", "Producción lote 5").</li>
+    <li>Haga clic en <strong>Registrar movimiento</strong>. El stock se actualiza automáticamente.</li>
+  </ol>
+
+  <h3>9.4 Historial de movimientos</h3>
+  <p>
+    Acceda a <strong>Inventario → Movimientos</strong> para ver el historial completo de todas
+    las entradas y salidas del inventario, con fecha, tipo, cantidad, insumo afectado y usuario
+    que realizó el movimiento.
+  </p>
+
+  <h3>9.5 Alerta de stock bajo</h3>
+  <p>
+    El sistema compara automáticamente el <em>stock actual</em> con el <em>stock mínimo</em>
+    configurado para cada insumo. Si el stock actual es igual o menor al mínimo, el insumo
+    aparece destacado en rojo y se muestra la alerta en la parte superior de la lista.
+  </p>
+  <div class="peligro">
+    <strong>Acción recomendada</strong>
+    Cuando aparezca la alerta de stock bajo, registre una <em>Entrada</em> de movimiento
+    para reponer el insumo y mantener la producción sin interrupciones.
+  </div>
+
+  <h3>9.6 Exportar a Excel</h3>
+  <p>
+    Haga clic en <strong>Exportar Excel</strong> para descargar el inventario completo en
+    formato <em>.xlsx</em> con columnas: nombre, descripción, unidad, stock actual, stock
+    mínimo, precio unitario y estado.
+  </p>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- 10. REPORTES                                           -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="seccion">
+  <h2 class="titulo-seccion">10. Reportes</h2>
+  <p>
+    El módulo de reportes permite analizar el desempeño financiero del negocio en un período
+    determinado. Acceda a <strong>Reportes</strong> en el menú lateral.
+  </p>
+
+  <h3>10.1 Resumen del período</h3>
+  <p>
+    La página principal de reportes muestra el resumen general del período seleccionado.
+    Por defecto muestra el mes actual (del primer día hasta hoy).
+  </p>
+  <ul>
+    <li>Use los campos <span class="campo">Desde</span> y <span class="campo">Hasta</span> para cambiar el rango de fechas.</li>
+    <li>Haga clic en <strong>Aplicar</strong> para actualizar los datos.</li>
+  </ul>
+  <table>
+    <thead><tr><th>Indicador</th><th>Descripción</th></tr></thead>
+    <tbody>
+      <tr><td>Total ventas</td><td>Suma de todas las ventas en el período</td></tr>
+      <tr><td>Total gastos</td><td>Suma de todos los gastos registrados en el período</td></tr>
+      <tr><td>Utilidad bruta</td><td>Ventas − Gastos</td></tr>
+      <tr><td>Número de ventas</td><td>Cantidad de transacciones de venta realizadas</td></tr>
+      <tr><td>Número de cotizaciones</td><td>Cotizaciones generadas en el período</td></tr>
+    </tbody>
+  </table>
+
+  <h3>10.2 Reporte de ventas</h3>
+  <p>
+    Haga clic en <strong>Ver reporte de ventas</strong> o acceda desde el menú.
+    Este reporte muestra el detalle de todas las ventas en el período: fecha, cliente,
+    ítems, total y vendedor. Incluye el subtotal por período al final de la tabla.
+  </p>
+  <p>
+    Ajuste el rango de fechas con los campos <span class="campo">Desde</span> y
+    <span class="campo">Hasta</span> y haga clic en <strong>Filtrar</strong>.
+  </p>
+
+  <h3>10.3 Reporte de gastos</h3>
+  <p>
+    Haga clic en <strong>Ver reporte de gastos</strong>. Muestra todos los gastos del período
+    agrupados y con el total al final. También permite filtrar por rango de fechas.
+  </p>
+
+  <div class="nota">
+    <strong>Consejo</strong>
+    Para generar un reporte mensual, configure <em>Desde</em> al primer día del mes y
+    <em>Hasta</em> al último día. Los reportes son solo de visualización; para exportar
+    use los botones de Excel en los módulos de Ventas y Gastos.
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- 11. PERFIL                                             -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="seccion">
+  <h2 class="titulo-seccion">11. Perfil de Usuario</h2>
+
+  <h3>11.1 Ver perfil</h3>
+  <p>
+    Acceda a su perfil haciendo clic en su nombre en la barra superior o navegando a
+    <strong>Perfil</strong> en el menú. Verá sus datos personales: nombre, apellido, email
+    y rol asignado en el sistema.
+  </p>
+  <div class="nota">
+    <strong>Nota</strong>
+    El email y el rol solo pueden ser modificados por un administrador desde el módulo de
+    Administración de Usuarios.
+  </div>
+
+  <h3>11.2 Cambiar contraseña</h3>
+  <p>
+    Desde la vista de perfil, haga clic en <strong>Cambiar contraseña</strong> o acceda a
+    <strong>Perfil → Configuración</strong>. Para cambiar su contraseña:
+  </p>
+  <ol class="pasos">
+    <li>Ingrese su <span class="campo">Contraseña actual</span> para verificar su identidad.</li>
+    <li>Ingrese la <span class="campo">Nueva contraseña</span>. Debe cumplir los requisitos de seguridad (mínimo 8 caracteres, mayúscula, número y carácter especial).</li>
+    <li>Confirme la nueva contraseña en el campo <span class="campo">Repetir contraseña</span>.</li>
+    <li>Haga clic en <strong>Guardar cambios</strong>.</li>
+  </ol>
+  <div class="peligro">
+    <strong>Importante</strong>
+    Si olvida su contraseña actual, use el proceso de recuperación desde la pantalla de login
+    (sección 2.2 de este manual). No es posible cambiar la contraseña sin conocer la actual
+    o tener acceso al correo registrado.
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- 12. ADMINISTRACIÓN DE USUARIOS                         -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="seccion">
+  <h2 class="titulo-seccion">12. Administración de Usuarios <span class="badge badge-admin">Solo ADMIN</span></h2>
+  <p>
+    Este módulo solo es visible para usuarios con rol <strong>ADMIN</strong>. Permite gestionar
+    todas las cuentas de acceso al sistema.
+  </p>
+
+  <h3>12.1 Listado de usuarios</h3>
+  <p>
+    Acceda a <strong>Administración → Usuarios</strong>. Verá la lista de todos los usuarios
+    registrados con nombre, email, rol y estado (activo/inactivo).
+  </p>
+
+  <h3>12.2 Crear nuevo usuario</h3>
+  <ol class="pasos">
+    <li>Haga clic en <strong>+ Nuevo Usuario</strong>.</li>
+    <li>Complete el formulario:</li>
+  </ol>
+  <table>
+    <thead><tr><th>Campo</th><th>Requerido</th><th>Descripción</th></tr></thead>
+    <tbody>
+      <tr><td>Nombre</td><td>Sí</td><td>Nombre del usuario</td></tr>
+      <tr><td>Apellido</td><td>Sí</td><td>Apellido del usuario</td></tr>
+      <tr><td>Email</td><td>Sí</td><td>Correo electrónico (será su nombre de usuario)</td></tr>
+      <tr><td>Contraseña</td><td>Sí</td><td>Contraseña inicial (el usuario puede cambiarla después)</td></tr>
+      <tr><td>Rol</td><td>Sí</td><td>ADMIN o EMPLEADO</td></tr>
+    </tbody>
+  </table>
+  <ol class="pasos" start="3">
+    <li>Haga clic en <strong>Crear Usuario</strong>.</li>
+    <li>Comunique las credenciales al nuevo usuario de forma segura.</li>
+  </ol>
+  <div class="aviso">
+    <strong>Buena práctica</strong>
+    Solicite al nuevo usuario que cambie su contraseña en el primer ingreso usando
+    <strong>Perfil → Configuración</strong>.
+  </div>
+
+  <h3>12.3 Editar usuario</h3>
+  <p>
+    En la lista de usuarios, haga clic en el ícono de <strong>lápiz</strong> junto al usuario
+    que desea modificar. Puede cambiar su nombre, apellido, email y rol. Haga clic en
+    <strong>Guardar</strong>.
+  </p>
+
+  <h3>12.4 Activar / Desactivar usuario</h3>
+  <p>
+    Use el interruptor de estado en la lista de usuarios. Un usuario <strong>inactivo</strong>
+    no puede iniciar sesión en el sistema, pero sus registros históricos (ventas, cotizaciones,
+    gastos) se conservan.
+  </p>
+  <div class="peligro">
+    <strong>Precaución</strong>
+    No desactive su propia cuenta de administrador. Si lo hace, no podrá acceder al sistema
+    y necesitará acceso directo a la base de datos para recuperarlo.
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PIE DE PÁGINA                                          -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="footer-manual">
+  <hr style="margin-bottom:20px;">
+  <strong>Creaciones Edimile</strong> — Sistema de Gestión Empresarial<br>
+  Manual de Usuario v1.0 &nbsp;·&nbsp; 2026<br>
+  <span style="font-size:8.5pt;">Documento confidencial de uso interno. Prohibida su reproducción sin autorización.</span>
+</div>
+
+</body>
+</html>

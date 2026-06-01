@@ -52,6 +52,11 @@
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link sidebar-link" th:href="@{/gastos}">
+                <i class="bi bi-wallet2 me-2"></i>Gastos
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link sidebar-link" th:href="@{/reportes}">
                 <i class="bi bi-graph-up me-2"></i>Reportes
             </a>
@@ -72,76 +77,21 @@
 
     </ul>
 
-</nav>
-
-        <!-- Dashboard -->
-        <li class="nav-item">
-            <a class="nav-link sidebar-link" th:href="@{/dashboard}">
-                <i class="bi bi-speedometer2 me-2"></i>Dashboard
-            </a>
-        </li>
-
-        <!-- Clientes -->
-        <li class="nav-item">
-            <a class="nav-link sidebar-link" th:href="@{/clientes}">
-                <i class="bi bi-people me-2"></i>Clientes
-            </a>
-        </li>
-
-        <!-- Productos -->
-        <li class="nav-item">
-            <a class="nav-link sidebar-link" th:href="@{/productos}">
-                <i class="bi bi-box me-2"></i>Productos
-            </a>
-        </li>
-
-        <!-- Inventario -->
-        <li class="nav-item">
-            <a class="nav-link sidebar-link" th:href="@{/inventario}">
-                <i class="bi bi-clipboard-data me-2"></i>Inventario
-            </a>
-        </li>
-
-        <!-- Cotizaciones -->
-        <li class="nav-item">
-            <a class="nav-link sidebar-link" th:href="@{/cotizaciones}">
-                <i class="bi bi-file-text me-2"></i>Cotizaciones
-            </a>
-        </li>
-
-        <!-- Ventas -->
-        <li class="nav-item">
-            <a class="nav-link sidebar-link" th:href="@{/ventas}">
-                <i class="bi bi-cart-check me-2"></i>Ventas
-            </a>
-        </li>
-
-        <!-- Reportes -->
-        <li class="nav-item">
-            <a class="nav-link sidebar-link" th:href="@{/reportes}">
-                <i class="bi bi-graph-up me-2"></i>Reportes
-            </a>
-        </li>
-
-        <!-- ======================================
-             SECCIÓN ADMINISTRACIÓN — solo ADMIN
-             sec:authorize ocultará este bloque
-             completo para usuarios con rol VENDEDOR
-             ====================================== -->
-        <li class="nav-item" sec:authorize="hasRole('ADMIN')">
-            <hr class="border-secondary mx-2 my-2">
-            <span class="text-white-50 text-uppercase small fw-bold px-3">
-                Administración
-            </span>
-        </li>
-
-        <li class="nav-item" sec:authorize="hasRole('ADMIN')">
-            <a class="nav-link sidebar-link" th:href="@{/admin/usuarios}">
-                <i class="bi bi-person-gear me-2"></i>Usuarios
-            </a>
-        </li>
-
-    </ul>
+    <!-- Resaltar el módulo activo según la ruta actual -->
+    <script>
+    (function () {
+        var path = window.location.pathname;
+        document.querySelectorAll('#sidebar .sidebar-link').forEach(function (link) {
+            var href = link.getAttribute('href');
+            if (!href) return;
+            if (href === '/dashboard') {
+                if (path === '/dashboard' || path === '/') link.classList.add('active');
+            } else if (path.startsWith(href)) {
+                link.classList.add('active');
+            }
+        });
+    }());
+    </script>
 
 </nav>
 

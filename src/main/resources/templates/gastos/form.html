@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${gasto != null} ? 'Editar Gasto ' + ${gasto.numero} : 'Nuevo Gasto'">Gasto — Creaciones Edimile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+</head>
+<body>
+
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <div class="d-flex" id="wrapper">
+        <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+        <div id="page-content" class="flex-grow-1">
+
+            <!-- Encabezado -->
+            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+                <div>
+                    <h3 class="fw-bold mb-0">
+                        <i class="bi bi-wallet2 me-2 text-dark"></i>
+                        <span th:text="${gasto != null} ? 'Editar Gasto ' + ${gasto.numero} : 'Nuevo Gasto'"></span>
+                    </h3>
+                    <p class="text-muted small mb-0"
+                       th:text="${gasto != null} ? 'Modifica los datos del gasto.' : 'Registra un nuevo egreso de la empresa.'"></p>
+                </div>
+                <a th:href="@{/gastos}" class="btn btn-outline-secondary btn-sm">
+                    <i class="bi bi-arrow-left me-1"></i>Volver
+                </a>
+            </div>
+
+            <!-- Alerta flash -->
+            <div th:if="${errorMsg}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="bi bi-exclamation-circle me-2"></i>
+                <span th:text="${errorMsg}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+
+            <!-- Formulario -->
+            <form th:action="${gasto != null} ? @{/gastos/{id}/editar(id=${gasto.id})} : @{/gastos/nuevo}"
+                  method="post">
+
+                <div class="row g-4">
+                    <!-- Columna principal -->
+                    <div class="col-lg-8">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-header bg-dark text-white fw-semibold py-2">
+                                <i class="bi bi-pencil-square me-1"></i>Datos del Gasto
+                            </div>
+                            <div class="card-body">
+
+                                <!-- Nombre / Motivo -->
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold small">
+                                        Nombre / Motivo <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" name="nombre" class="form-control"
+                                           placeholder="Ej: Pago nómina mayo, Arriendo local, Compra papelería…"
+                                           th:value="${gasto?.nombre}" required maxlength="200">
+                                </div>
+
+                                <!-- Descripción -->
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold small">Descripción</label>
+                                    <textarea name="descripcion" class="form-control" rows="3"
+                                              placeholder="Detalle adicional del gasto (opcional)…"
+                                              th:text="${gasto?.descripcion}"></textarea>
+                                </div>
+
+                                <!-- Categoría + Método de pago -->
+                                <div class="row g-3">
+                                    <div class="col-sm-6">
+                                        <label class="form-label fw-semibold small">
+                                            Categoría <span class="text-danger">*</span>
+                                        </label>
+                                        <select name="categoria" class="form-select" required>
+                                            <option value="">— Seleccionar —</option>
+                                            <option th:each="cat : ${categorias}"
+                                                    th:value="${cat.name()}"
+                                                    th:text="${cat.name()}"
+                                                    th:selected="${gasto != null and gasto.categoria != null and gasto.categoria == cat}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="form-label fw-semibold small">
+                                            Método de pago <span class="text-danger">*</span>
+                                        </label>
+                                        <select name="metodoPago" class="form-select" required>
+                                            <option value="">— Seleccionar —</option>
+                                            <option th:each="mp : ${metodosPago}"
+                                                    th:value="${mp.name()}"
+                                                    th:text="${mp.name()}"
+                                                    th:selected="${gasto != null and gasto.metodoPago != null and gasto.metodoPago == mp}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Total + Fecha de pago -->
+                                <div class="row g-3 mt-0">
+                                    <div class="col-sm-6">
+                                        <label class="form-label fw-semibold small">
+                                            Total ($) <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">$</span>
+                                            <input type="number" name="total" class="form-control"
+                                                   min="0" step="0.01" placeholder="0.00"
+                                                   th:value="${gasto?.total}" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="form-label fw-semibold small">
+                                            Fecha de pago <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="date" name="fechaPago" class="form-control" required
+                                               th:value="${gasto != null and gasto.fechaPago != null}
+                                                   ? ${#temporals.format(gasto.fechaPago.toDate().toInstant().atZone(T(java.time.ZoneId).of('America/Bogota')), 'yyyy-MM-dd')}
+                                                   : ${#temporals.format(T(java.time.LocalDate).now(), 'yyyy-MM-dd')}">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Columna lateral: datos opcionales -->
+                    <div class="col-lg-4">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-header bg-dark text-white fw-semibold py-2">
+                                <i class="bi bi-building me-1"></i>Datos Opcionales
+                            </div>
+                            <div class="card-body">
+
+                                <!-- Proveedor -->
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold small">Proveedor / Acreedor</label>
+                                    <input type="text" name="proveedor" class="form-control"
+                                           placeholder="Nombre del proveedor…"
+                                           th:value="${gasto?.proveedor}" maxlength="200">
+                                    <div class="form-text">Empresa o persona a quien se le pagó.</div>
+                                </div>
+
+                                <!-- Comprobante -->
+                                <div class="mb-0">
+                                    <label class="form-label fw-semibold small">Nro. Comprobante / Factura</label>
+                                    <input type="text" name="comprobante" class="form-control"
+                                           placeholder="Ej: FAC-2024-001"
+                                           th:value="${gasto?.comprobante}" maxlength="100">
+                                    <div class="form-text">Número de la factura o recibo de pago.</div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Ayuda de categorías -->
+                        <div class="card border-0 shadow-sm mt-3 border-start border-4 border-secondary">
+                            <div class="card-body py-2 px-3">
+                                <p class="small fw-semibold mb-1 text-muted">
+                                    <i class="bi bi-info-circle me-1"></i>Guía de categorías
+                                </p>
+                                <ul class="small text-muted mb-0 ps-3">
+                                    <li><strong>NOMINA</strong>: Sueldos y prestaciones</li>
+                                    <li><strong>ARRIENDO</strong>: Local o bodega</li>
+                                    <li><strong>SERVICIOS PÚBLICOS</strong>: Agua, luz, internet</li>
+                                    <li><strong>SUMINISTROS</strong>: Materiales y papelería</li>
+                                    <li><strong>MANTENIMIENTO</strong>: Equipos y local</li>
+                                    <li><strong>MARKETING</strong>: Publicidad y redes</li>
+                                    <li><strong>TRANSPORTE</strong>: Envíos y desplazamientos</li>
+                                    <li><strong>IMPUESTOS</strong>: Obligaciones tributarias</li>
+                                    <li><strong>OTROS</strong>: Gastos varios</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botones -->
+                <div class="d-flex justify-content-end gap-2 mt-4">
+                    <a th:href="@{/gastos}" class="btn btn-outline-secondary">
+                        <i class="bi bi-x-lg me-1"></i>Cancelar
+                    </a>
+                    <button type="submit" class="btn btn-dark px-4">
+                        <i class="bi bi-check-lg me-1"></i>
+                        <span th:text="${gasto != null} ? 'Guardar cambios' : 'Registrar gasto'"></span>
+                    </button>
+                </div>
+
+            </form>
+        </div><!-- /page-content -->
+    </div><!-- /wrapper -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Creaciones Edimile — Presentación del Proyecto</title>
+<style>
+/* ════════════════════════════════════════════════════════
+   RESET Y BASE
+════════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+body { font-family: 'Segoe UI', Arial, sans-serif; background: #1a1a1a; color: #fff; }
+
+/* ════════════════════════════════════════════════════════
+   DIAPOSITIVA BASE — proporción 16:9 A4 landscape
+════════════════════════════════════════════════════════ */
+.slide {
+  width: 297mm;
+  min-height: 165mm;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto 6mm;
+  page-break-after: always;
+  page-break-inside: avoid;
+}
+
+/* ════════════════════════════════════════════════════════
+   SLIDE 1 — PORTADA
+════════════════════════════════════════════════════════ */
+.s-portada {
+  background: #000;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 14mm 20mm;
+  min-height: 190mm;
+}
+.s-portada .marca {
+  font-size: 62pt;
+  font-weight: 900;
+  letter-spacing: 8px;
+  color: #fff;
+  line-height: 1;
+}
+.s-portada .marca-sub {
+  font-size: 12pt;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: #888;
+  margin-bottom: 10mm;
+}
+.s-portada .linea-blanca {
+  width: 60mm;
+  height: 2px;
+  background: #fff;
+  margin: 8mm auto;
+}
+.s-portada h1 {
+  font-size: 22pt;
+  font-weight: 300;
+  letter-spacing: 1px;
+  color: #eee;
+  margin-bottom: 3mm;
+}
+.s-portada .subtitulo {
+  font-size: 12pt;
+  color: #aaa;
+  margin-bottom: 12mm;
+}
+.s-portada .meta {
+  font-size: 9pt;
+  color: #666;
+  line-height: 1.8;
+}
+.s-portada .tag-nube {
+  display: inline-block;
+  border: 1px solid #444;
+  border-radius: 20px;
+  padding: 3px 12px;
+  font-size: 8pt;
+  color: #888;
+  margin: 2px 3px;
+}
+
+/* ════════════════════════════════════════════════════════
+   LAYOUT: cabecera de sección
+════════════════════════════════════════════════════════ */
+.slide-header {
+  padding: 7mm 12mm 5mm;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.slide-header .num {
+  font-size: 9pt;
+  font-weight: 700;
+  color: #888;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.slide-header h2 {
+  font-size: 17pt;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.5px;
+}
+.slide-header h2 span { color: #ff6b35; }
+.slide-body {
+  flex: 1;
+  padding: 6mm 12mm 7mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.slide-footer {
+  padding: 3mm 12mm;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 7pt;
+  color: #555;
+}
+.slide-footer .logo-footer { font-weight: 900; letter-spacing: 3px; color: #666; }
+
+/* ════════════════════════════════════════════════════════
+   PALETA DE FONDOS
+════════════════════════════════════════════════════════ */
+.bg-black   { background: #000; }
+.bg-dark    { background: #0d0d0d; }
+.bg-dark2   { background: #111; }
+.bg-dark3   { background: #141414; }
+.bg-accent  { background: linear-gradient(135deg, #1a0a00 0%, #2d1100 100%); }
+.bg-accent2 { background: linear-gradient(135deg, #0a0a1a 0%, #0d0d2a 100%); }
+
+/* ════════════════════════════════════════════════════════
+   COMPONENTES REUTILIZABLES
+════════════════════════════════════════════════════════ */
+
+/* Cards de 2 columnas */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4mm; }
+.grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 4mm; }
+
+.card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 6px;
+  padding: 5mm;
+}
+.card.accent-border { border-left: 3px solid #ff6b35; }
+.card.blue-border   { border-left: 3px solid #4fc3f7; }
+.card.green-border  { border-left: 3px solid #66bb6a; }
+.card.red-border    { border-left: 3px solid #ef5350; }
+
+.card-icon { font-size: 22pt; margin-bottom: 3mm; }
+.card h4   { font-size: 10pt; font-weight: 700; margin-bottom: 2mm; color: #eee; }
+.card p    { font-size: 8.5pt; color: #aaa; line-height: 1.5; }
+
+/* Texto destacado grande */
+.stat { text-align: center; }
+.stat .num-grande { font-size: 36pt; font-weight: 900; color: #ff6b35; line-height: 1; }
+.stat .label-stat { font-size: 8.5pt; color: #888; margin-top: 1mm; }
+
+/* Tabla comparativa */
+.tabla-comp {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 9pt;
+}
+.tabla-comp th {
+  padding: 4mm 5mm;
+  text-align: left;
+  font-weight: 700;
+  font-size: 9pt;
+  letter-spacing: 0.5px;
+}
+.tabla-comp th.th-mysql { background: #1a1a2e; color: #90caf9; border-bottom: 2px solid #2196f3; }
+.tabla-comp th.th-fire  { background: #1a0d00; color: #ffcc80; border-bottom: 2px solid #ff9800; }
+.tabla-comp th.th-asp   { background: #0d1a0d; color: #a5d6a7; border-bottom: 2px solid #4caf50; }
+.tabla-comp td {
+  padding: 3mm 5mm;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  vertical-align: top;
+  color: #ccc;
+}
+.tabla-comp tr:last-child td { border-bottom: none; }
+.tabla-comp .check  { color: #66bb6a; font-weight: 700; }
+.tabla-comp .cross  { color: #ef5350; font-weight: 700; }
+.tabla-comp .warn   { color: #ffa726; font-weight: 700; }
+
+/* Etiquetas */
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 7.5pt;
+  font-weight: 700;
+}
+.badge-orange { background: rgba(255,107,53,0.2); color: #ff6b35; border: 1px solid #ff6b35; }
+.badge-blue   { background: rgba(79,195,247,0.15); color: #4fc3f7; border: 1px solid #4fc3f7; }
+.badge-green  { background: rgba(102,187,106,0.15); color: #66bb6a; border: 1px solid #66bb6a; }
+.badge-red    { background: rgba(239,83,80,0.2); color: #ef5350; border: 1px solid #ef5350; }
+.badge-gray   { background: rgba(255,255,255,0.08); color: #aaa; border: 1px solid #555; }
+
+/* Flecha de flujo */
+.flujo {
+  display: flex;
+  align-items: center;
+  gap: 3mm;
+  flex-wrap: wrap;
+}
+.flujo-item {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 6px;
+  padding: 3mm 5mm;
+  text-align: center;
+  font-size: 9pt;
+  color: #ddd;
+  min-width: 18mm;
+}
+.flujo-arrow { color: #555; font-size: 14pt; }
+
+/* Lista de objetivos */
+.obj-list { list-style: none; }
+.obj-list li {
+  display: flex;
+  gap: 4mm;
+  padding: 3mm 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-size: 9.5pt;
+  color: #ccc;
+  align-items: flex-start;
+}
+.obj-list li:last-child { border-bottom: none; }
+.obj-num {
+  min-width: 20px;
+  height: 20px;
+  background: #ff6b35;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 7.5pt;
+  font-weight: 900;
+  color: #000;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* Colección Firestore (representación visual) */
+.col-box {
+  background: rgba(255,152,0,0.08);
+  border: 1px solid rgba(255,152,0,0.3);
+  border-radius: 6px;
+  padding: 3mm 4mm;
+  font-size: 8pt;
+}
+.col-name { font-weight: 900; color: #ffcc02; font-size: 9pt; margin-bottom: 2mm; }
+.col-field { color: #aaa; display: flex; gap: 2mm; align-items: center; margin-bottom: 1mm; }
+.col-field .ftype { color: #4fc3f7; font-family: monospace; font-size: 7.5pt; }
+.col-field .fembed { color: #ff6b35; font-family: monospace; font-size: 7.5pt; }
+.col-field .fref   { color: #81c784; font-family: monospace; font-size: 7.5pt; }
+.col-icon { font-size: 12pt; }
+
+/* Diagrama de arquitectura */
+.arch-layer {
+  background: rgba(255,255,255,0.04);
+  border: 1px dashed rgba(255,255,255,0.12);
+  border-radius: 6px;
+  padding: 3mm 5mm;
+  margin-bottom: 2mm;
+  display: flex;
+  align-items: center;
+  gap: 5mm;
+}
+.arch-label {
+  font-size: 7.5pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #666;
+  min-width: 22mm;
+}
+.arch-items { display: flex; gap: 3mm; flex-wrap: wrap; }
+.arch-item {
+  background: rgba(255,255,255,0.07);
+  border-radius: 4px;
+  padding: 1.5mm 4mm;
+  font-size: 8.5pt;
+  color: #ddd;
+}
+
+/* Timeline de problemas */
+.problema-item {
+  display: flex;
+  gap: 4mm;
+  align-items: flex-start;
+  padding: 3mm 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.problema-item:last-child { border-bottom: none; }
+.prob-icon { font-size: 16pt; min-width: 10mm; text-align: center; }
+.prob-texto h4 { font-size: 9.5pt; font-weight: 700; color: #ef5350; margin-bottom: 1mm; }
+.prob-texto p  { font-size: 8.5pt; color: #999; line-height: 1.4; }
+
+/* Módulo chip */
+.modulo-chip {
+  display: flex;
+  align-items: center;
+  gap: 3mm;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 6px;
+  padding: 3mm 4mm;
+  font-size: 9pt;
+  color: #ddd;
+}
+.modulo-chip .mi { font-size: 14pt; }
+
+/* Quote destacado */
+.quote-box {
+  background: rgba(255,107,53,0.08);
+  border-left: 4px solid #ff6b35;
+  padding: 5mm 7mm;
+  border-radius: 0 6px 6px 0;
+  margin: 3mm 0;
+}
+.quote-box p { font-size: 11pt; color: #eee; font-style: italic; line-height: 1.5; }
+.quote-box .source { font-size: 8pt; color: #888; margin-top: 2mm; }
+
+/* Línea de ventaja SQL vs Firestore */
+.vs-row {
+  display: grid;
+  grid-template-columns: 1fr 20mm 1fr;
+  gap: 3mm;
+  align-items: center;
+  padding: 2.5mm 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 8.5pt;
+}
+.vs-row .col-bad  { color: #ef9a9a; text-align: right; }
+.vs-row .col-good { color: #a5d6a7; }
+.vs-row .vs-label { text-align: center; font-size: 7.5pt; font-weight: 700; color: #666; text-transform: uppercase; letter-spacing: 1px; }
+
+/* Beneficio con número */
+.benefit-item {
+  display: flex;
+  gap: 4mm;
+  align-items: flex-start;
+  padding: 2.5mm 0;
+}
+.ben-num { font-size: 22pt; font-weight: 900; color: rgba(255,107,53,0.3); line-height: 1; min-width: 12mm; }
+.ben-texto h4 { font-size: 9.5pt; font-weight: 700; color: #eee; margin-bottom: 1mm; }
+.ben-texto p  { font-size: 8.5pt; color: #999; line-height: 1.4; }
+
+/* Icono de tecnología */
+.tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3mm;
+  align-items: center;
+}
+.tech-pill {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 2mm 5mm;
+  font-size: 9pt;
+  color: #ccc;
+  display: flex;
+  align-items: center;
+  gap: 2mm;
+}
+.tech-pill .tdot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* ════════════════════════════════════════════════════════
+   SLIDE ESPECIAL: SOLO CONTENIDO CENTRADO
+════════════════════════════════════════════════════════ */
+.slide-section-break {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100mm;
+}
+.slide-section-break .sec-num {
+  font-size: 9pt;
+  letter-spacing: 4px;
+  color: #ff6b35;
+  text-transform: uppercase;
+  margin-bottom: 3mm;
+}
+.slide-section-break h2 {
+  font-size: 30pt;
+  font-weight: 900;
+  color: #fff;
+}
+.slide-section-break p {
+  font-size: 11pt;
+  color: #666;
+  margin-top: 3mm;
+}
+
+/* ════════════════════════════════════════════════════════
+   SEPARADOR DE NÚMERO DE DIAPOSITIVA
+════════════════════════════════════════════════════════ */
+.pag { font-weight: 900; color: #ff6b35; }
+
+/* ════════════════════════════════════════════════════════
+   IMPRESIÓN
+════════════════════════════════════════════════════════ */
+@media print {
+  body { background: #000; }
+  .slide { margin: 0; width: 297mm; min-height: 180mm; }
+  @page { size: A4 landscape; margin: 0; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 1 — PORTADA                                      ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide s-portada bg-black">
+  <div class="marca">EDIMILE</div>
+  <div class="marca-sub">Creaciones</div>
+  <div class="linea-blanca"></div>
+  <h1>Sistema Web de Gestión Empresarial</h1>
+  <p class="subtitulo">Digitalización integral de procesos operativos y comerciales</p>
+  <div class="linea-blanca"></div>
+  <div class="meta">
+    <span class="tag-nube">☁ Google Cloud Run</span>
+    <span class="tag-nube">🔥 Firebase Firestore</span>
+    <span class="tag-nube">☕ Spring Boot 3</span>
+    <span class="tag-nube">🔒 Spring Security</span>
+    <br><br>
+    Proyecto de grado · Ingeniería de Sistemas · 2026
+  </div>
+</div>
+
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 2 — BREAK: EL PROBLEMA                           ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide bg-dark3 slide-section-break" style="padding: 12mm;">
+  <div class="sec-num">01 · Diagnóstico</div>
+  <h2>¿Cuál era el problema?</h2>
+  <p>La realidad de una empresa sin sistema de gestión</p>
+</div>
+
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 3 — DIAGNÓSTICO / PROBLEMAS                      ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide bg-dark3">
+  <div class="slide-header">
+    <span class="num">01</span>
+    <h2>La realidad de <span>Creaciones Edimile</span> antes del sistema</h2>
+  </div>
+  <div class="slide-body">
+    <div class="grid-2" style="gap:4mm;">
+      <div>
+        <div class="problema-item">
+          <div class="prob-icon">📋</div>
+          <div class="prob-texto">
+            <h4>Cotizaciones en papel o Excel</h4>
+            <p>Sin numeración, sin historial, sin estados. Propuestas perdidas o enviadas con errores de precio.</p>
+          </div>
+        </div>
+        <div class="problema-item">
+          <div class="prob-icon">📦</div>
+          <div class="prob-texto">
+            <h4>Sin control de inventario</h4>
+            <p>Desabastecimiento de insumos detectado cuando ya era tarde. Pedidos retrasados por falta de material.</p>
+          </div>
+        </div>
+        <div class="problema-item">
+          <div class="prob-icon">👥</div>
+          <div class="prob-texto">
+            <h4>Historial de clientes disperso</h4>
+            <p>Datos repartidos en WhatsApp, cuadernos y hojas. Imposible hacer seguimiento comercial.</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="problema-item">
+          <div class="prob-icon">💰</div>
+          <div class="prob-texto">
+            <h4>Sin reportes financieros reales</h4>
+            <p>Decisiones tomadas por estimación. No se sabía con precisión cuánto se ganó ni cuánto se gastó.</p>
+          </div>
+        </div>
+        <div class="problema-item">
+          <div class="prob-icon">🔓</div>
+          <div class="prob-texto">
+            <h4>Sin control de accesos</h4>
+            <p>Cualquier persona podía modificar precios, eliminar ventas o ver información sensible.</p>
+          </div>
+        </div>
+        <div class="problema-item">
+          <div class="prob-icon">⏱️</div>
+          <div class="prob-texto">
+            <h4>Tiempo improductivo</h4>
+            <p>Horas invertidas en generar cotizaciones manualmente, calcular totales y buscar información entre archivos.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">
+    <div class="logo-footer">EDIMILE</div>
+    <div>Sistema de Gestión Empresarial · 2026</div>
+    <div><span class="pag">01</span> / 14</div>
+  </div>
+</div>
+
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 4 — IMPACTO DEL PROBLEMA (números)               ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide bg-accent">
+  <div class="slide-header">
+    <span class="num">01</span>
+    <h2>El costo de <span>no tener</span> un sistema</h2>
+  </div>
+  <div class="slide-body">
+    <div class="grid-4" style="margin-bottom:5mm;">
+      <div class="stat">
+        <div class="num-grande">3h</div>
+        <div class="label-stat">Promedio para generar una cotización manualmente</div>
+      </div>
+      <div class="stat">
+        <div class="num-grande">0%</div>
+        <div class="label-stat">Trazabilidad de cambios en precios o pedidos</div>
+      </div>
+      <div class="stat">
+        <div class="num-grande">∞</div>
+        <div class="label-stat">Posibilidad de error humano en cálculos manuales</div>
+      </div>
+      <div class="stat">
+        <div class="num-grande">❌</div>
+        <div class="label-stat">Informes financieros consolidados disponibles</div>
+      </div>
+    </div>
+    <div class="quote-box">
+      <p>"Las pequeñas y medianas empresas que digitalizan sus procesos de gestión reducen hasta un <strong>40% el tiempo operativo</strong> y mejoran su toma de decisiones con datos reales."</p>
+      <div class="source">— Referencia: tendencias de transformación digital en PyMEs latinoamericanas</div>
+    </div>
+  </div>
+  <div class="slide-footer">
+    <div class="logo-footer">EDIMILE</div>
+    <div>Sistema de Gestión Empresarial · 2026</div>
+    <div><span class="pag">02</span> / 14</div>
+  </div>
+</div>
+
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 5 — OBJETIVO GENERAL                             ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide bg-dark2">
+  <div class="slide-header">
+    <span class="num">02</span>
+    <h2>Objetivo <span>General</span></h2>
+  </div>
+  <div class="slide-body" style="justify-content:flex-start; gap:4mm;">
+    <div class="quote-box" style="border-left-color:#4fc3f7; background:rgba(79,195,247,0.06);">
+      <p>Desarrollar un sistema web para <strong>Creaciones Edimile</strong> que permita gestionar de manera centralizada y eficiente los procesos de autenticación de usuarios, gestión de clientes, catálogo de productos, control de inventario de insumos, cotizaciones, ventas y generación de reportes; desplegado en infraestructura cloud sobre <strong>Google Cloud Run</strong> y con persistencia en <strong>Firebase Firestore</strong>.</p>
+    </div>
+    <div class="grid-3" style="margin-top:2mm;">
+      <div class="card blue-border">
+        <div class="card-icon">🎯</div>
+        <h4>Centralización</h4>
+        <p>Una sola plataforma para todas las operaciones del negocio, accesible desde cualquier dispositivo.</p>
+      </div>
+      <div class="card accent-border">
+        <div class="card-icon">⚡</div>
+        <h4>Eficiencia</h4>
+        <p>Automatización de cálculos, generación de documentos PDF y reportes en segundos.</p>
+      </div>
+      <div class="card green-border">
+        <div class="card-icon">☁</div>
+        <h4>Escalabilidad cloud</h4>
+        <p>Infraestructura serverless que crece con el negocio sin costos fijos de servidor.</p>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">
+    <div class="logo-footer">EDIMILE</div>
+    <div>Sistema de Gestión Empresarial · 2026</div>
+    <div><span class="pag">03</span> / 14</div>
+  </div>
+</div>
+
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 6 — OBJETIVOS ESPECÍFICOS                        ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide bg-dark">
+  <div class="slide-header">
+    <span class="num">02</span>
+    <h2>Objetivos <span>Específicos</span></h2>
+  </div>
+  <div class="slide-body" style="justify-content:flex-start;">
+    <ul class="obj-list">
+      <li>
+        <span class="obj-num">1</span>
+        Implementar un módulo de <strong>autenticación con roles</strong> (Administrador y Empleado) con recuperación de contraseña por correo electrónico.
+      </li>
+      <li>
+        <span class="obj-num">2</span>
+        Desarrollar un módulo de <strong>gestión de clientes</strong> con registro, búsqueda, edición y eliminación lógica.
+      </li>
+      <li>
+        <span class="obj-num">3</span>
+        Construir un módulo de <strong>catálogo de productos</strong> con categorías, imagen de referencia y precio base.
+      </li>
+      <li>
+        <span class="obj-num">4</span>
+        Crear un módulo de <strong>inventario de insumos</strong> con registro de entradas/salidas y alertas de stock mínimo.
+      </li>
+      <li>
+        <span class="obj-num">5</span>
+        Implementar un módulo de <strong>cotizaciones</strong> con generación de PDF profesional, seguimiento de estados y conversión a venta.
+      </li>
+      <li>
+        <span class="obj-num">6</span>
+        Desarrollar un módulo de <strong>ventas</strong> con factura en PDF, exportación a Excel y gestión de métodos de pago.
+      </li>
+      <li>
+        <span class="obj-num">7</span>
+        Implementar módulos de <strong>gastos y reportes</strong> que permitan análisis financiero por período con exportación a Excel.
+      </li>
+      <li>
+        <span class="obj-num">8</span>
+        <strong>Desplegar en la nube</strong> usando Google Cloud Run (backend) y Firebase Hosting (frontend), garantizando disponibilidad 24/7.
+      </li>
+    </ul>
+  </div>
+  <div class="slide-footer">
+    <div class="logo-footer">EDIMILE</div>
+    <div>Sistema de Gestión Empresarial · 2026</div>
+    <div><span class="pag">04</span> / 14</div>
+  </div>
+</div>
+
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 7 — MÓDULOS DEL SISTEMA                          ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide bg-dark2">
+  <div class="slide-header">
+    <span class="num">03</span>
+    <h2>¿Qué hace el <span>sistema</span>?</h2>
+  </div>
+  <div class="slide-body">
+    <div class="grid-3">
+      <div class="modulo-chip card accent-border"><span class="mi">🔐</span><div><strong>Autenticación</strong><br><span style="font-size:8pt;color:#888">Roles · Recuperación de contraseña</span></div></div>
+      <div class="modulo-chip card blue-border"><span class="mi">👥</span><div><strong>Clientes</strong><br><span style="font-size:8pt;color:#888">Registro · Búsqueda · Historial</span></div></div>
+      <div class="modulo-chip card green-border"><span class="mi">🛍</span><div><strong>Productos</strong><br><span style="font-size:8pt;color:#888">Catálogo · Categorías · Imágenes</span></div></div>
+      <div class="modulo-chip card accent-border"><span class="mi">📄</span><div><strong>Cotizaciones</strong><br><span style="font-size:8pt;color:#888">PDF · Estados · Conversión a venta</span></div></div>
+      <div class="modulo-chip card blue-border"><span class="mi">💵</span><div><strong>Ventas</strong><br><span style="font-size:8pt;color:#888">Factura PDF · Excel · Métodos de pago</span></div></div>
+      <div class="modulo-chip card green-border"><span class="mi">💸</span><div><strong>Gastos</strong><br><span style="font-size:8pt;color:#888">Categorías · Exportación Excel</span></div></div>
+      <div class="modulo-chip card accent-border"><span class="mi">📦</span><div><strong>Inventario</strong><br><span style="font-size:8pt;color:#888">Stock · Movimientos · Alertas</span></div></div>
+      <div class="modulo-chip card blue-border"><span class="mi">📊</span><div><strong>Reportes</strong><br><span style="font-size:8pt;color:#888">Ingresos · Gastos · Utilidad</span></div></div>
+      <div class="modulo-chip card green-border"><span class="mi">⚙</span><div><strong>Administración</strong><br><span style="font-size:8pt;color:#888">Usuarios · Roles · Control de acceso</span></div></div>
+    </div>
+  </div>
+  <div class="slide-footer">
+    <div class="logo-footer">EDIMILE</div>
+    <div>Sistema de Gestión Empresarial · 2026</div>
+    <div><span class="pag">05</span> / 14</div>
+  </div>
+</div>
+
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 8 — STACK TECNOLÓGICO                            ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide bg-dark3">
+  <div class="slide-header">
+    <span class="num">04</span>
+    <h2>Stack <span>Tecnológico</span></h2>
+  </div>
+  <div class="slide-body">
+    <div class="arch-layer">
+      <div class="arch-label">☁ Infraestructura</div>
+      <div class="arch-items">
+        <div class="arch-item">🔥 Firebase Hosting</div>
+        <div class="arch-item">☁ Google Cloud Run</div>
+        <div class="arch-item">🐳 Docker (eclipse-temurin:17-jre)</div>
+        <div class="arch-item">📦 Google Container Registry</div>
+      </div>
+    </div>
+    <div class="arch-layer">
+      <div class="arch-label">🗄 Datos</div>
+      <div class="arch-items">
+        <div class="arch-item">🔥 Firebase Firestore (NoSQL)</div>
+        <div class="arch-item">✉ Brevo SMTP (email)</div>
+        <div class="arch-item">📁 Cloud Storage (imágenes)</div>
+      </div>
+    </div>
+    <div class="arch-layer">
+      <div class="arch-label">⚙ Backend</div>
+      <div class="arch-items">
+        <div class="arch-item">☕ Java 17</div>
+        <div class="arch-item">🍃 Spring Boot 3.3.4</div>
+        <div class="arch-item">🔒 Spring Security 6</div>
+        <div class="arch-item">📧 Spring Mail</div>
+        <div class="arch-item">🔥 Firebase Admin SDK</div>
+        <div class="arch-item">📄 OpenPDF 1.3.30</div>
+        <div class="arch-item">📊 Apache POI 5.2.5</div>
+      </div>
+    </div>
+    <div class="arch-layer">
+      <div class="arch-label">🖥 Frontend</div>
+      <div class="arch-items">
+        <div class="arch-item">🌿 Thymeleaf 3</div>
+        <div class="arch-item">🎨 Bootstrap 5.3</div>
+        <div class="arch-item">🔶 JavaScript (vanilla)</div>
+        <div class="arch-item">📐 HTML5 / CSS3</div>
+      </div>
+    </div>
+    <div class="arch-layer">
+      <div class="arch-label">🛠 DevOps</div>
+      <div class="arch-items">
+        <div class="arch-item">⚙ Maven 3.9.6</div>
+        <div class="arch-item">🐙 Git + GitHub</div>
+        <div class="arch-item">🐳 Docker multistage build</div>
+        <div class="arch-item">🚀 gcloud CLI</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">
+    <div class="logo-footer">EDIMILE</div>
+    <div>Sistema de Gestión Empresarial · 2026</div>
+    <div><span class="pag">06</span> / 14</div>
+  </div>
+</div>
+
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 9 — BREAK: BASE DE DATOS                         ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide bg-black slide-section-break" style="padding:12mm;">
+  <div class="sec-num">05 · Decisión técnica clave</div>
+  <h2>SQL vs. NoSQL</h2>
+  <p>¿Por qué cambiamos de MySQL a Firebase Firestore?</p>
+</div>
+
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 10 — COMPARACIÓN SQL vs NOSQL                    ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide bg-dark">
+  <div class="slide-header">
+    <span class="num">05</span>
+    <h2>MySQL (propuesta inicial) <span>vs.</span> Firebase Firestore (implementado)</h2>
+  </div>
+  <div class="slide-body">
+    <table class="tabla-comp">
+      <thead>
+        <tr>
+          <th class="th-mysql" style="width:36%">🗄 MySQL · Relacional (SQL)</th>
+          <th style="width:18%;background:#0a0a0a;color:#666;border-bottom:2px solid #333;font-size:8pt;text-transform:uppercase;letter-spacing:1px;">Criterio</th>
+          <th class="th-fire" style="width:36%">🔥 Firebase Firestore · NoSQL</th>
+          <th style="width:10%;background:#0a0a0a;border-bottom:2px solid #333;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="cross">Requiere servidor propio (o VM). Costo fijo mensual aunque no haya tráfico.</td>
+          <td style="text-align:center;font-size:8pt;color:#666;font-weight:700;">Infraestructura</td>
+          <td class="check">Serverless. Se paga solo por lecturas/escrituras reales. Escala a cero.</td>
+          <td><span class="badge badge-green">✔ Firestore</span></td>
+        </tr>
+        <tr>
+          <td class="cross">JOINs complejos para cargar una cotización: cotizaciones + items_cotizacion + clientes + usuarios (4 tablas).</td>
+          <td style="text-align:center;font-size:8pt;color:#666;font-weight:700;">Consultas</td>
+          <td class="check">Cotización guardada como documento con ítems embebidos. Una sola lectura, sin JOINs.</td>
+          <td><span class="badge badge-green">✔ Firestore</span></td>
+        </tr>
+        <tr>
+          <td class="cross">Si el cliente cambia su nombre, todas las cotizaciones antiguas reflejan el nombre nuevo (inconsistencia histórica).</td>
+          <td style="text-align:center;font-size:8pt;color:#666;font-weight:700;">Integridad histórica</td>
+          <td class="check">Datos del cliente desnormalizados en cada cotización/venta. Snapshot inmutable.</td>
+          <td><span class="badge badge-green">✔ Firestore</span></td>
+        </tr>
+        <tr>
+          <td class="cross">Agregar un campo requiere ALTER TABLE + migración en producción. Riesgo de downtime.</td>
+          <td style="text-align:center;font-size:8pt;color:#666;font-weight:700;">Flexibilidad de esquema</td>
+          <td class="check">Schema-less. Se añaden campos sin migraciones ni downtime. Ideal para evolución ágil.</td>
+          <td><span class="badge badge-green">✔ Firestore</span></td>
+        </tr>
+        <tr>
+          <td class="cross">Requiere configuración manual de backups, SSL, usuarios de DB, firewall, etc.</td>
+          <td style="text-align:center;font-size:8pt;color:#666;font-weight:700;">Mantenimiento</td>
+          <td class="check">Google gestiona backups, replicación, seguridad y alta disponibilidad automáticamente.</td>
+          <td><span class="badge badge-green">✔ Firestore</span></td>
+        </tr>
+        <tr>
+          <td class="check">Relaciones muy complejas y reportes con GROUP BY / SUM avanzados son más naturales.</td>
+          <td style="text-align:center;font-size:8pt;color:#666;font-weight:700;">Queries analíticos</td>
+          <td class="warn">Requiere diseño cuidadoso. Se resuelve con agregaciones en el servicio Java.</td>
+          <td><span class="badge badge-gray">Empate</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="slide-footer">
+    <div class="logo-footer">EDIMILE</div>
+    <div>Sistema de Gestión Empresarial · 2026</div>
+    <div><span class="pag">07</span> / 14</div>
+  </div>
+</div>
+
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 11 — MODELO FIRESTORE (colecciones)              ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide bg-dark3">
+  <div class="slide-header">
+    <span class="num">05</span>
+    <h2>Modelo de Base de Datos — <span>Firebase Firestore</span></h2>
+  </div>
+  <div class="slide-body">
+    <div class="grid-3" style="gap:3mm;align-items:start;">
+
+      <!-- usuarios -->
+      <div class="col-box">
+        <div class="col-name">📁 usuarios</div>
+        <div class="col-field"><span class="ftype">string</span>&nbsp;id, nombre, apellido</div>
+        <div class="col-field"><span class="ftype">string</span>&nbsp;email, password (BCrypt)</div>
+        <div class="col-field"><span class="ftype">string</span>&nbsp;rol → "ADMIN" | "EMPLEADO"</div>
+        <div class="col-field"><span class="ftype">bool</span>&nbsp;activo</div>
+      </div>
+
+      <!-- clientes -->
+      <div class="col-box">
+        <div class="col-name">📁 clientes</div>
+        <div class="col-field"><span class="ftype">string</span>&nbsp;nombre, apellido, empresa</div>
+        <div class="col-field"><span class="ftype">string</span>&nbsp;tipoDocumento, numeroDocumento</div>
+        <div class="col-field"><span class="ftype">string</span>&nbsp;telefono, email, direccion</div>
+        <div class="col-field"><span class="ftype">bool</span>&nbsp;activo</div>
+      </div>
+
+      <!-- categorias + productos -->
+      <div class="col-box">
+        <div class="col-name">📁 categorias</div>
+        <div class="col-field"><span class="ftype">string</span>&nbsp;nombre, descripcion</div>
+        <div class="col-field"><span class="ftype">bool</span>&nbsp;activo</div>
+        <br>
+        <div class="col-name">📁 productos</div>
+        <div class="col-field"><span class="ftype">string</span>&nbsp;nombre, descripcion</div>
+        <div class="col-field"><span class="fref">ref</span>&nbsp;categoriaId → categorias</div>
+        <div class="col-field"><span class="ftype">double</span>&nbsp;precioBase</div>
+        <div class="col-field"><span class="ftype">string</span>&nbsp;imagenUrl</div>
+      </div>
+
+      <!-- cotizaciones (el más importante) -->
+      <div class="col-box" style="grid-column:span 2;">
+        <div class="col-name">📁 cotizaciones &nbsp;<span style="font-size:7.5pt;color:#aaa;font-weight:400;">— patrón snapshot (datos desnormalizados)</span></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:3mm;">
+          <div>
+            <div class="col-field"><span class="ftype">string</span>&nbsp;numero → COT-0001</div>
+            <div class="col-field"><span class="ftype">string</span>&nbsp;estado → PENDIENTE | APROBADA | RECHAZADA | VENCIDA</div>
+            <div class="col-field"><span class="ftype">double</span>&nbsp;subtotal, descuento, iva, total</div>
+            <div class="col-field"><span class="ftype">timestamp</span>&nbsp;fechaCreacion, fechaVencimiento</div>
+          </div>
+          <div>
+            <div class="col-field" style="color:#ff6b35;">🔸 Cliente desnormalizado (snapshot):</div>
+            <div class="col-field">&nbsp;&nbsp;<span class="ftype">string</span>&nbsp;clienteNombre, clienteDoc, clienteTel</div>
+            <div class="col-field"><span class="fembed">array[]</span>&nbsp;items: [{productoNombre, cantidad, precio, subtotal}]</div>
+            <div class="col-field"><span class="ftype">string</span>&nbsp;usuarioNombre (vendedor)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ventas -->
+      <div class="col-box">
+        <div class="col-name">📁 ventas</div>
+        <div class="col-field"><span class="ftype">string</span>&nbsp;numero → FAC-0001</div>
+        <div class="col-field"><span class="fref">ref?</span>&nbsp;cotizacionId (opcional)</div>
+        <div class="col-field"><span class="ftype">string</span>&nbsp;estado, metodoPago</div>
+        <div class="col-field"><span class="fembed">array[]</span>&nbsp;items (mismo patrón)</div>
+        <div class="col-field"><span class="ftype">string</span>&nbsp;clienteNombre … (snapshot)</div>
+      </div>
+
+      <!-- gastos -->
+      <div class="col-box">
+        <div class="col-name">📁 gastos</div>
+        <div class="col-field"><span class="ftype">string</span>&nbsp;descripcion, categoria</div>
+        <div class="col-field"><span class="ftype">double</span>&nbsp;total</div>
+        <div class="col-field"><span class="ftype">timestamp</span>&nbsp;fecha</div>
+        <div class="col-field"><span class="ftype">string</span>&nbsp;usuarioNombre</div>
+      </div>
+
+      <!-- insumos + movimientos -->
+      <div class="col-box" style="grid-column:span 2;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:3mm;">
+          <div>
+            <div class="col-name">📁 insumos</div>
+            <div class="col-field"><span class="ftype">string</span>&nbsp;nombre, descripcion, unidadMedida</div>
+            <div class="col-field"><span class="ftype">double</span>&nbsp;stockActual, stockMinimo, precioUnitario</div>
+            <div class="col-field"><span class="ftype">bool</span>&nbsp;activo</div>
+          </div>
+          <div>
+            <div class="col-name">📁 movimientos_insumo</div>
+            <div class="col-field"><span class="fref">ref</span>&nbsp;insumoId → insumos</div>
+            <div class="col-field"><span class="ftype">string</span>&nbsp;tipo → ENTRADA | SALIDA | AJUSTE</div>
+            <div class="col-field"><span class="ftype">double</span>&nbsp;cantidad</div>
+            <div class="col-field"><span class="ftype">string</span>&nbsp;nota, usuarioNombre</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- password tokens -->
+      <div class="col-box">
+        <div class="col-name">📁 password_reset_tokens</div>
+        <div class="col-field"><span class="ftype">string</span>&nbsp;email, token (UUID)</div>
+        <div class="col-field"><span class="ftype">timestamp</span>&nbsp;expiracion (1h)</div>
+        <div class="col-field"><span class="ftype">bool</span>&nbsp;usado</div>
+      </div>
+
+    </div>
+  </div>
+  <div class="slide-footer">
+    <div class="logo-footer">EDIMILE</div>
+    <div>Sistema de Gestión Empresarial · 2026</div>
+    <div><span class="pag">08</span> / 14</div>
+  </div>
+</div>
+
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 12 — PATRÓN SNAPSHOT (por qué es clave)          ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide bg-accent2">
+  <div class="slide-header">
+    <span class="num">05</span>
+    <h2>Patrón <span>Snapshot</span> — la clave del diseño NoSQL</h2>
+  </div>
+  <div class="slide-body">
+    <div class="grid-2" style="gap:6mm;align-items:start;">
+      <div>
+        <h3 style="color:#ef5350;font-size:10pt;margin-bottom:3mm;">❌ Problema con SQL normalizado</h3>
+        <div class="card red-border" style="margin-bottom:3mm;">
+          <p style="font-size:9pt;">La cotización tiene <code style="color:#4fc3f7;">cliente_id = 5</code>.<br>
+          Si el cliente cambia su nombre de <em>"Carlos Ruiz"</em> a <em>"Carlos Ruiz Hernández"</em>,<br>
+          <strong>todas las cotizaciones históricas</strong> mostrarán el nombre nuevo.<br>
+          Los documentos ya entregados ya no coinciden con el sistema.</p>
+        </div>
+        <h3 style="color:#66bb6a;font-size:10pt;margin-bottom:3mm;">✔ Solución con patrón Snapshot (Firestore)</h3>
+        <div class="card green-border">
+          <p style="font-size:9pt;">Cuando se crea la cotización, se <strong>copia</strong> el nombre, documento y datos del cliente <strong>dentro del documento</strong> de la cotización.<br><br>
+          Si el cliente cambia sus datos, las cotizaciones/ventas históricas conservan los datos <strong>tal como estaban en el momento de la transacción</strong>.</p>
+        </div>
+      </div>
+      <div>
+        <h3 style="color:#4fc3f7;font-size:10pt;margin-bottom:3mm;">📊 Comparación de consultas</h3>
+        <div class="card" style="margin-bottom:3mm;">
+          <h4 style="color:#ef9a9a;">SQL — Cargar cotización COT-0001</h4>
+          <pre style="font-size:7.5pt;color:#aaa;white-space:pre-wrap;line-height:1.6;">SELECT c.*, cl.nombre, cl.documento,
+       u.nombre as vendedor,
+       ic.descripcion, ic.cantidad, ic.precio
+FROM cotizaciones c
+JOIN clientes cl ON c.cliente_id = cl.id
+JOIN usuarios u  ON c.usuario_id = u.id
+JOIN items_cotizacion ic ON ic.cotizacion_id = c.id
+WHERE c.numero = 'COT-0001';</pre>
+          <p style="font-size:8pt;color:#888;margin-top:2mm;">4 tablas · 3 JOINs · múltiples round-trips</p>
+        </div>
+        <div class="card green-border">
+          <h4 style="color:#a5d6a7;">Firestore — Cargar cotización COT-0001</h4>
+          <pre style="font-size:7.5pt;color:#aaa;white-space:pre-wrap;line-height:1.6;">db.collection("cotizaciones")
+  .whereEqualTo("numero", "COT-0001")
+  .get();</pre>
+          <p style="font-size:8pt;color:#888;margin-top:2mm;">1 colección · 0 JOINs · 1 lectura · datos completos</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">
+    <div class="logo-footer">EDIMILE</div>
+    <div>Sistema de Gestión Empresarial · 2026</div>
+    <div><span class="pag">09</span> / 14</div>
+  </div>
+</div>
+
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 13 — ARQUITECTURA MVC Y DESPLIEGUE               ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide bg-dark">
+  <div class="slide-header">
+    <span class="num">06</span>
+    <h2>Arquitectura <span>MVC</span> y despliegue en la nube</h2>
+  </div>
+  <div class="slide-body">
+    <div class="grid-2" style="gap:6mm;align-items:center;">
+      <div>
+        <h4 style="color:#4fc3f7;font-size:9pt;margin-bottom:3mm;">🏗 Patrón MVC — Spring Boot</h4>
+        <div class="arch-layer">
+          <div class="arch-label" style="color:#4fc3f7;">Vista</div>
+          <div class="arch-items"><div class="arch-item">Thymeleaf + Bootstrap</div><div class="arch-item">HTML5 / JS</div></div>
+        </div>
+        <div style="text-align:center;color:#444;font-size:16pt;">↕</div>
+        <div class="arch-layer">
+          <div class="arch-label" style="color:#ff6b35;">Controlador</div>
+          <div class="arch-items"><div class="arch-item">@Controller</div><div class="arch-item">Spring Security</div><div class="arch-item">@PreAuthorize</div></div>
+        </div>
+        <div style="text-align:center;color:#444;font-size:16pt;">↕</div>
+        <div class="arch-layer">
+          <div class="arch-label" style="color:#66bb6a;">Servicio</div>
+          <div class="arch-items"><div class="arch-item">@Service</div><div class="arch-item">Lógica de negocio</div></div>
+        </div>
+        <div style="text-align:center;color:#444;font-size:16pt;">↕</div>
+        <div class="arch-layer">
+          <div class="arch-label" style="color:#ffa726;">Repositorio</div>
+          <div class="arch-items"><div class="arch-item">Firebase Firestore SDK</div><div class="arch-item">@Repository</div></div>
+        </div>
+      </div>
+      <div>
+        <h4 style="color:#ff6b35;font-size:9pt;margin-bottom:3mm;">☁ Flujo de despliegue</h4>
+        <div class="flujo" style="flex-direction:column;align-items:stretch;gap:2mm;">
+          <div class="flujo-item" style="display:flex;align-items:center;gap:3mm;">
+            <span style="font-size:14pt;">💻</span>
+            <div><strong>Código fuente</strong><br><span style="font-size:8pt;color:#888;">Spring Boot + Maven</span></div>
+          </div>
+          <div style="text-align:center;color:#444;font-size:16pt;line-height:1;">↓</div>
+          <div class="flujo-item" style="display:flex;align-items:center;gap:3mm;">
+            <span style="font-size:14pt;">🐳</span>
+            <div><strong>Docker image</strong><br><span style="font-size:8pt;color:#888;">eclipse-temurin:17-jre (Debian/glibc)</span></div>
+          </div>
+          <div style="text-align:center;color:#444;font-size:16pt;line-height:1;">↓</div>
+          <div class="flujo-item" style="display:flex;align-items:center;gap:3mm;">
+            <span style="font-size:14pt;">📦</span>
+            <div><strong>Google Container Registry</strong><br><span style="font-size:8pt;color:#888;">gcr.io/creaciones-edimile/...</span></div>
+          </div>
+          <div style="text-align:center;color:#444;font-size:16pt;line-height:1;">↓</div>
+          <div class="flujo-item" style="border:1px solid rgba(255,107,53,0.4);display:flex;align-items:center;gap:3mm;">
+            <span style="font-size:14pt;">☁</span>
+            <div><strong>Cloud Run (us-central1)</strong><br><span style="font-size:8pt;color:#888;">Auto-scale · 0→∞ instancias · HTTPS automático</span></div>
+          </div>
+          <div style="text-align:center;color:#444;font-size:16pt;line-height:1;">↑</div>
+          <div class="flujo-item" style="border:1px solid rgba(79,195,247,0.3);display:flex;align-items:center;gap:3mm;">
+            <span style="font-size:14pt;">🌐</span>
+            <div><strong>Firebase Hosting</strong><br><span style="font-size:8pt;color:#888;">creaciones-edimile.web.app · CDN global</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">
+    <div class="logo-footer">EDIMILE</div>
+    <div>Sistema de Gestión Empresarial · 2026</div>
+    <div><span class="pag">10</span> / 14</div>
+  </div>
+</div>
+
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 14 — SEGURIDAD                                   ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide bg-dark2">
+  <div class="slide-header">
+    <span class="num">07</span>
+    <h2>Seguridad del <span>Sistema</span></h2>
+  </div>
+  <div class="slide-body">
+    <div class="grid-3">
+      <div class="card accent-border">
+        <div class="card-icon">🔐</div>
+        <h4>Contraseñas con BCrypt</h4>
+        <p>Ninguna contraseña se almacena en texto plano. Spring Security aplica hashing BCrypt con salt automático.</p>
+      </div>
+      <div class="card blue-border">
+        <div class="card-icon">🛡</div>
+        <h4>Control de roles</h4>
+        <p>Cada URL y método del sistema está protegido con <code style="font-size:7.5pt;color:#4fc3f7;">@PreAuthorize</code>. El acceso se verifica en cada petición.</p>
+      </div>
+      <div class="card green-border">
+        <div class="card-icon">🔒</div>
+        <h4>HTTPS obligatorio</h4>
+        <p>Firebase Hosting y Cloud Run sirven todo el tráfico por HTTPS. Certificados gestionados por Google automáticamente.</p>
+      </div>
+      <div class="card accent-border">
+        <div class="card-icon">✉</div>
+        <h4>Tokens de recuperación</h4>
+        <p>Los tokens de restablecimiento de contraseña son UUID únicos con vigencia de 1 hora y uso único.</p>
+      </div>
+      <div class="card blue-border">
+        <div class="card-icon">🕐</div>
+        <h4>Sesiones con expiración</h4>
+        <p>Las sesiones expiran automáticamente tras inactividad. Spring Security invalida la sesión al cerrar sesión.</p>
+      </div>
+      <div class="card green-border">
+        <div class="card-icon">🔥</div>
+        <h4>Reglas Firestore</h4>
+        <p>Firebase Firestore solo acepta peticiones autenticadas desde el servidor backend. No hay acceso directo desde el navegador.</p>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">
+    <div class="logo-footer">EDIMILE</div>
+    <div>Sistema de Gestión Empresarial · 2026</div>
+    <div><span class="pag">11</span> / 14</div>
+  </div>
+</div>
+
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 15 — FLUJO DE NEGOCIO PRINCIPAL                  ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide bg-dark3">
+  <div class="slide-header">
+    <span class="num">08</span>
+    <h2>Flujo de negocio <span>principal</span></h2>
+  </div>
+  <div class="slide-body">
+    <p style="font-size:9pt;color:#888;margin-bottom:5mm;">Ciclo completo de una transacción comercial en el sistema:</p>
+    <div style="display:flex;flex-direction:column;gap:2mm;">
+      <!-- Fila 1 -->
+      <div class="flujo" style="justify-content:center;">
+        <div class="flujo-item" style="background:rgba(79,195,247,0.08);border-color:rgba(79,195,247,0.3);">
+          <div style="font-size:9pt;">👥</div>
+          <div style="font-size:8pt;font-weight:700;color:#4fc3f7;">1. Registrar cliente</div>
+        </div>
+        <div class="flujo-arrow">→</div>
+        <div class="flujo-item" style="background:rgba(79,195,247,0.08);border-color:rgba(79,195,247,0.3);">
+          <div style="font-size:9pt;">📄</div>
+          <div style="font-size:8pt;font-weight:700;color:#4fc3f7;">2. Crear cotización</div>
+        </div>
+        <div class="flujo-arrow">→</div>
+        <div class="flujo-item" style="background:rgba(79,195,247,0.08);border-color:rgba(79,195,247,0.3);">
+          <div style="font-size:9pt;">📤</div>
+          <div style="font-size:8pt;font-weight:700;color:#4fc3f7;">3. Descargar PDF</div>
+        </div>
+        <div class="flujo-arrow">→</div>
+        <div class="flujo-item" style="background:rgba(79,195,247,0.08);border-color:rgba(79,195,247,0.3);">
+          <div style="font-size:9pt;">✉</div>
+          <div style="font-size:8pt;font-weight:700;color:#4fc3f7;">4. Enviar al cliente</div>
+        </div>
+      </div>
+      <div style="text-align:center;color:#333;font-size:20pt;line-height:1;">↓</div>
+      <!-- Fila 2 -->
+      <div class="flujo" style="justify-content:center;">
+        <div class="flujo-item" style="background:rgba(255,107,53,0.08);border-color:rgba(255,107,53,0.3);">
+          <div style="font-size:9pt;">✅</div>
+          <div style="font-size:8pt;font-weight:700;color:#ff6b35;">5. Cliente aprueba</div>
+        </div>
+        <div class="flujo-arrow">→</div>
+        <div class="flujo-item" style="background:rgba(255,107,53,0.08);border-color:rgba(255,107,53,0.3);">
+          <div style="font-size:9pt;">💵</div>
+          <div style="font-size:8pt;font-weight:700;color:#ff6b35;">6. Convertir a venta</div>
+        </div>
+        <div class="flujo-arrow">→</div>
+        <div class="flujo-item" style="background:rgba(255,107,53,0.08);border-color:rgba(255,107,53,0.3);">
+          <div style="font-size:9pt;">🧾</div>
+          <div style="font-size:8pt;font-weight:700;color:#ff6b35;">7. Factura PDF</div>
+        </div>
+        <div class="flujo-arrow">→</div>
+        <div class="flujo-item" style="background:rgba(255,107,53,0.08);border-color:rgba(255,107,53,0.3);">
+          <div style="font-size:9pt;">📦</div>
+          <div style="font-size:8pt;font-weight:700;color:#ff6b35;">8. Descontar inventario</div>
+        </div>
+      </div>
+      <div style="text-align:center;color:#333;font-size:20pt;line-height:1;">↓</div>
+      <!-- Fila 3 -->
+      <div class="flujo" style="justify-content:center;">
+        <div class="flujo-item" style="background:rgba(102,187,106,0.08);border-color:rgba(102,187,106,0.3);">
+          <div style="font-size:9pt;">💸</div>
+          <div style="font-size:8pt;font-weight:700;color:#66bb6a;">9. Registrar gastos</div>
+        </div>
+        <div class="flujo-arrow">→</div>
+        <div class="flujo-item" style="background:rgba(102,187,106,0.08);border-color:rgba(102,187,106,0.3);">
+          <div style="font-size:9pt;">📊</div>
+          <div style="font-size:8pt;font-weight:700;color:#66bb6a;">10. Ver reportes</div>
+        </div>
+        <div class="flujo-arrow">→</div>
+        <div class="flujo-item" style="background:rgba(102,187,106,0.08);border-color:rgba(102,187,106,0.3);">
+          <div style="font-size:9pt;">📈</div>
+          <div style="font-size:8pt;font-weight:700;color:#66bb6a;">11. Análisis utilidad</div>
+        </div>
+        <div class="flujo-arrow">→</div>
+        <div class="flujo-item" style="background:rgba(102,187,106,0.08);border-color:rgba(102,187,106,0.3);">
+          <div style="font-size:9pt;">📥</div>
+          <div style="font-size:8pt;font-weight:700;color:#66bb6a;">12. Exportar Excel</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">
+    <div class="logo-footer">EDIMILE</div>
+    <div>Sistema de Gestión Empresarial · 2026</div>
+    <div><span class="pag">12</span> / 14</div>
+  </div>
+</div>
+
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 16 — BENEFICIOS LOGRADOS                         ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide bg-dark">
+  <div class="slide-header">
+    <span class="num">09</span>
+    <h2>Beneficios <span>logrados</span></h2>
+  </div>
+  <div class="slide-body">
+    <div class="grid-2" style="gap:4mm;align-items:start;">
+      <div>
+        <div class="benefit-item">
+          <div class="ben-num">01</div>
+          <div class="ben-texto">
+            <h4>Eliminación del papel y hojas de cálculo</h4>
+            <p>Toda la información del negocio centralizada en una sola plataforma web accesible desde cualquier dispositivo.</p>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <div class="ben-num">02</div>
+          <div class="ben-texto">
+            <h4>Cotizaciones y facturas profesionales en segundos</h4>
+            <p>Documentos PDF con membrete de la empresa generados automáticamente, listos para enviar al cliente.</p>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <div class="ben-num">03</div>
+          <div class="ben-texto">
+            <h4>Trazabilidad total de operaciones</h4>
+            <p>Cada cotización, venta, gasto y movimiento de inventario queda registrado con fecha, usuario y estado.</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="benefit-item">
+          <div class="ben-num">04</div>
+          <div class="ben-texto">
+            <h4>Alertas de inventario en tiempo real</h4>
+            <p>El sistema avisa automáticamente cuando el stock de un insumo cae por debajo del mínimo configurado.</p>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <div class="ben-num">05</div>
+          <div class="ben-texto">
+            <h4>Reportes financieros por período</h4>
+            <p>Ventas, gastos y utilidad calculados al instante para cualquier rango de fechas, exportables a Excel.</p>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <div class="ben-num">06</div>
+          <div class="ben-texto">
+            <h4>Infraestructura cloud sin costo fijo</h4>
+            <p>Google Cloud Run escala a cero cuando no hay tráfico. Firebase Hosting + Firestore con capa gratuita generosa.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">
+    <div class="logo-footer">EDIMILE</div>
+    <div>Sistema de Gestión Empresarial · 2026</div>
+    <div><span class="pag">13</span> / 14</div>
+  </div>
+</div>
+
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 17 — CONCLUSIONES                                ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide bg-dark3">
+  <div class="slide-header">
+    <span class="num">10</span>
+    <h2>Conclusiones</h2>
+  </div>
+  <div class="slide-body">
+    <div class="grid-2" style="gap:5mm;align-items:start;">
+      <div>
+        <ul class="obj-list">
+          <li>
+            <span class="obj-num" style="background:#4fc3f7;color:#000;">✓</span>
+            Se desarrolló un sistema web completo con <strong>9 módulos funcionales</strong>, cubriendo el ciclo comercial completo de la empresa.
+          </li>
+          <li>
+            <span class="obj-num" style="background:#4fc3f7;color:#000;">✓</span>
+            La migración de <strong>MySQL a Firebase Firestore</strong> resultó en un modelo más eficiente para los patrones de acceso reales del negocio, eliminando JOINs complejos y garantizando integridad histórica de documentos.
+          </li>
+          <li>
+            <span class="obj-num" style="background:#4fc3f7;color:#000;">✓</span>
+            El despliegue en <strong>Google Cloud Run + Firebase Hosting</strong> permite disponibilidad 24/7 sin necesidad de administrar servidores.
+          </li>
+          <li>
+            <span class="obj-num" style="background:#4fc3f7;color:#000;">✓</span>
+            Se aplicaron principios de <strong>Clean Code, MVC y SOLID</strong> garantizando un código mantenible y extensible.
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color:#aaa;font-size:9pt;margin-bottom:3mm;">🔭 Trabajo futuro — posibles mejoras</h4>
+        <div class="card" style="margin-bottom:2mm;">
+          <p style="font-size:8.5pt;color:#ccc;">📱 <strong>App móvil nativa</strong> con Flutter para gestión desde el celular sin navegador.</p>
+        </div>
+        <div class="card" style="margin-bottom:2mm;">
+          <p style="font-size:8.5pt;color:#ccc;">📧 <strong>Envío de cotizaciones por email</strong> directamente desde el sistema al cliente.</p>
+        </div>
+        <div class="card" style="margin-bottom:2mm;">
+          <p style="font-size:8.5pt;color:#ccc;">🤖 <strong>Integración con WhatsApp Business API</strong> para notificaciones automáticas de estados.</p>
+        </div>
+        <div class="card">
+          <p style="font-size:8.5pt;color:#ccc;">📊 <strong>Dashboard analítico avanzado</strong> con gráficas de tendencias, productos más vendidos y proyecciones.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">
+    <div class="logo-footer">EDIMILE</div>
+    <div>Sistema de Gestión Empresarial · 2026</div>
+    <div><span class="pag">14</span> / 14</div>
+  </div>
+</div>
+
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 18 — CIERRE                                      ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide bg-black s-portada" style="min-height:120mm;padding:16mm;">
+  <div class="marca" style="font-size:48pt;">EDIMILE</div>
+  <div class="marca-sub" style="font-size:10pt;">Sistema de Gestión Empresarial</div>
+  <div class="linea-blanca"></div>
+  <h1 style="font-size:18pt;font-weight:300;">¿Preguntas?</h1>
+  <p style="color:#666;font-size:11pt;margin-top:3mm;">Gracias por su atención</p>
+  <div style="margin-top:8mm;">
+    <span class="tag-nube">🌐 creaciones-edimile.web.app</span>
+  </div>
+  <div style="margin-top:10mm;font-size:8.5pt;color:#555;">
+    Proyecto de grado · Ingeniería de Sistemas · 2026
+  </div>
+</div>
+
+</body>
+</html>

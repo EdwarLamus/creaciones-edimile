@@ -1,7 +1,10 @@
 package com.creacionesedimile.controller;
 
+import com.creacionesedimile.service.EmailService;
 import com.creacionesedimile.service.PasswordResetService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,17 +17,22 @@ import java.util.Optional;
  *
  * Rutas:
  *  GET  /forgot-password          → formulario para ingresar email
- *  POST /forgot-password          → genera token y muestra enlace
+ *  POST /forgot-password          → genera token y envía email
  *  GET  /reset-password?token=xxx → formulario para nueva contraseña
  *  POST /reset-password           → actualiza contraseña y redirige al login
  */
 @Controller
 public class PasswordResetController {
 
-    private final PasswordResetService passwordResetService;
+    private static final Logger log = LoggerFactory.getLogger(PasswordResetController.class);
 
-    public PasswordResetController(PasswordResetService passwordResetService) {
+    private final PasswordResetService passwordResetService;
+    private final EmailService         emailService;
+
+    public PasswordResetController(PasswordResetService passwordResetService,
+                                   EmailService emailService) {
         this.passwordResetService = passwordResetService;
+        this.emailService         = emailService;
     }
 
     // ----------------------------------------------------------
@@ -51,12 +59,16 @@ public class PasswordResetController {
         model.addAttribute("email", email.trim().toLowerCase());
 
         if (tokenOpt.isPresent()) {
-            // En desarrollo/demo: mostrar el enlace directamente en pantalla.
-            // En producción: enviar por correo y NO exponer el enlace aquí.
-            String baseUrl = request.getScheme() + "://" + request.getServerName()
-                             + ":" + request.getServerPort();
+            String baseUrl  = request.getScheme() + "://" + request.getServerName()
+                              + ":" + request.getServerPort();
             String resetUrl = baseUrl + "/reset-password?token=" + tokenOpt.get();
-            model.addAttribute("resetUrl", resetUrl);
+            try {
+                emailService.enviarRecuperacionContrasena(email.trim().toLowerCase(), resetUrl);
+            } catch (Exception ex) {
+                log.error("[PasswordReset] Fallo al enviar correo a {}: {}", email, ex.getMessage(), ex);
+            }
+        } else {
+            log.warn("[PasswordReset] Email no encontrado en el sistema: {}", email.trim().toLowerCase());
         }
 
         return "forgot-password";

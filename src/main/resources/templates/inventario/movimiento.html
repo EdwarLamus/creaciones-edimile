@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${tipoMovimiento == 'ENTRADA'} ? 'Registrar Entrada — Creaciones Edimile' : 'Registrar Salida — Creaciones Edimile'">
+        Movimiento — Creaciones Edimile
+    </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+</head>
+<body>
+
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <div class="d-flex" id="wrapper">
+        <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+        <div id="page-content" class="flex-grow-1">
+
+            <!-- Encabezado -->
+            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+                <div>
+                    <h3 class="fw-bold mb-0">
+                        <i class="bi bi-plus-circle-fill me-2 text-success"
+                           th:if="${tipoMovimiento == 'ENTRADA'}"></i>
+                        <i class="bi bi-dash-circle-fill me-2 text-danger"
+                           th:unless="${tipoMovimiento == 'ENTRADA'}"></i>
+                        <span th:text="${tipoMovimiento == 'ENTRADA'} ? 'Registrar Entrada' : 'Registrar Salida'">
+                            Movimiento
+                        </span>
+                    </h3>
+                    <p class="text-muted small mb-0"
+                       th:text="${tipoMovimiento == 'ENTRADA'} ? 'Ingresa stock al inventario.' : 'Registra una salida o consumo de stock.'">
+                    </p>
+                </div>
+                <a th:href="@{/inventario}" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left me-1"></i>Volver al inventario
+                </a>
+            </div>
+
+            <!-- Info del insumo -->
+            <div class="card border-0 shadow-sm mb-4" style="max-width: 520px;">
+                <div class="card-body px-4 py-3">
+                    <div class="row g-2 align-items-center">
+                        <div class="col-auto">
+                            <div class="rounded-circle d-flex align-items-center justify-content-center"
+                                 style="width:44px; height:44px; background:#f0f0f0;">
+                                <i class="bi bi-box-seam fs-5 text-muted"></i>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="fw-semibold" th:text="${insumo.nombre}">Nombre</div>
+                            <div class="text-muted small" th:text="${insumo.unidadMedida}">ud</div>
+                        </div>
+                        <div class="col-auto text-end">
+                            <div class="small text-muted">Stock actual</div>
+                            <div class="fw-bold fs-5"
+                                 th:classappend="${insumo.bajoStock} ? 'text-danger' : 'text-dark'"
+                                 th:text="${#numbers.formatDecimal(insumo.stockActual, 1, 'COMMA', 2, 'POINT')} + ' ' + ${insumo.unidadMedida}">
+                                0
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Alerta stock bajo -->
+                    <div th:if="${insumo.bajoStock}"
+                         class="alert alert-warning d-flex align-items-center mt-2 mb-0 py-2" role="alert">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        <small>Stock por debajo del mínimo
+                            (<span th:text="${#numbers.formatDecimal(insumo.stockMinimo, 1, 'COMMA', 2, 'POINT')}">0</span>
+                            <span th:text="${insumo.unidadMedida}">ud</span>).
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulario de movimiento -->
+            <div class="card border-0 shadow-sm" style="max-width: 520px;">
+                <div class="card-body p-4">
+
+                    <form th:action="${tipoMovimiento == 'ENTRADA'}
+                                     ? @{/inventario/{id}/entrada(id=${insumo.id})}
+                                     : @{/inventario/{id}/salida(id=${insumo.id})}"
+                          method="post"
+                          novalidate>
+
+                        <div class="row g-3">
+
+                            <!-- Cantidad -->
+                            <div class="col-12">
+                                <label for="cantidad" class="form-label fw-semibold">
+                                    Cantidad a
+                                    <span th:text="${tipoMovimiento == 'ENTRADA'} ? 'ingresar' : 'retirar'">registrar</span>
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <input type="number"
+                                           id="cantidad"
+                                           name="cantidad"
+                                           class="form-control"
+                                           placeholder="0"
+                                           min="0.01"
+                                           step="0.01"
+                                           required>
+                                    <span class="input-group-text"
+                                          th:text="${insumo.unidadMedida}">ud</span>
+                                </div>
+                                <div class="form-text" th:if="${tipoMovimiento != 'ENTRADA'}">
+                                    Máximo disponible:
+                                    <strong th:text="${#numbers.formatDecimal(insumo.stockActual, 1, 'COMMA', 2, 'POINT')} + ' ' + ${insumo.unidadMedida}">0</strong>
+                                </div>
+                            </div>
+
+                            <!-- Observación -->
+                            <div class="col-12">
+                                <label for="observacion" class="form-label fw-semibold">
+                                    Observación <span class="text-muted fw-normal">(opcional)</span>
+                                </label>
+                                <textarea id="observacion"
+                                          name="observacion"
+                                          class="form-control"
+                                          rows="2"
+                                          th:placeholder="${tipoMovimiento == 'ENTRADA'} ? 'Proveedor, número de remisión…' : 'Orden de producción, motivo…'"
+                                          maxlength="300"></textarea>
+                            </div>
+
+                        </div>
+
+                        <!-- Botones -->
+                        <div class="d-flex gap-2 mt-4">
+                            <button type="submit"
+                                    th:classappend="${tipoMovimiento == 'ENTRADA'} ? 'btn-success' : 'btn-danger'"
+                                    class="btn px-4">
+                                <i class="bi bi-check-lg me-1"></i>
+                                <span th:text="${tipoMovimiento == 'ENTRADA'} ? 'Registrar entrada' : 'Registrar salida'">
+                                    Registrar
+                                </span>
+                            </button>
+                            <a th:href="@{/inventario}" class="btn btn-outline-secondary px-4">
+                                Cancelar
+                            </a>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

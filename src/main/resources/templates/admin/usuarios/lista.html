@@ -20,7 +20,7 @@
         <div id="page-content" class="flex-grow-1">
 
             <!-- Encabezado -->
-            <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
                 <div>
                     <h3 class="fw-bold mb-0">
                         <i class="bi bi-person-gear me-2 text-danger"></i>Gestión de Usuarios
@@ -32,22 +32,6 @@
                 <a th:href="@{/admin/usuarios/nuevo}" class="btn btn-danger">
                     <i class="bi bi-plus-circle me-1"></i>Nuevo Usuario
                 </a>
-            </div>
-
-            <!-- Mensajes flash -->
-            <div th:if="${successMsg}"
-                 class="alert alert-success alert-dismissible fade show d-flex align-items-center"
-                 role="alert">
-                <i class="bi bi-check-circle-fill me-2"></i>
-                <span th:text="${successMsg}"></span>
-                <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert"></button>
-            </div>
-            <div th:if="${errorMsg}"
-                 class="alert alert-danger alert-dismissible fade show d-flex align-items-center"
-                 role="alert">
-                <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                <span th:text="${errorMsg}"></span>
-                <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert"></button>
             </div>
 
             <!-- Tabla de usuarios -->
@@ -114,6 +98,16 @@
                                                 <i class="bi"
                                                    th:classappend="${u.activo} ? 'bi-person-dash' : 'bi-person-check'"></i>
                                                 <span th:text="${u.activo} ? 'Desactivar' : 'Activar'">Acción</span>
+                                            </button>
+                                        </form>
+                                        <!-- Eliminar usuario -->
+                                        <form th:action="@{/admin/usuarios/{id}/eliminar(id=${u.id})}"
+                                              method="post" class="d-inline ms-1"
+                                              onsubmit="return confirm('¿Está seguro de eliminar este usuario? Esta acción no se puede deshacer.')">
+                                            <button type="submit"
+                                                    class="btn btn-sm btn-outline-danger"
+                                                    title="Eliminar usuario">
+                                                <i class="bi bi-trash3"></i>
                                             </button>
                                         </form>
                                     </td>

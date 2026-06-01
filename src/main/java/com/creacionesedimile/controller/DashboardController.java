@@ -92,4 +92,15 @@ public class DashboardController {
 
         return "redirect:/admin/usuarios";
     }
+
+    @PostMapping("/admin/usuarios/{id}/eliminar")
+    public String eliminarUsuario(@PathVariable String id, RedirectAttributes ra) {
+        try {
+            usuarioService.eliminar(id);
+            ra.addFlashAttribute("successMsg", "Usuario eliminado correctamente.");
+        } catch (Exception e) {
+            ra.addFlashAttribute("errorMsg", "No se pudo eliminar el usuario: " + e.getMessage());
+        }
+        return "redirect:/admin/usuarios";
+    }
 }

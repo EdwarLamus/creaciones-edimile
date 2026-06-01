@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gastos — Creaciones Edimile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+</head>
+<body>
+
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <div class="d-flex" id="wrapper">
+        <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+        <div id="page-content" class="flex-grow-1">
+
+            <!-- Encabezado -->
+            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+                <div>
+                    <h3 class="fw-bold mb-0">
+                        <i class="bi bi-wallet2 me-2 text-dark"></i>Gastos
+                    </h3>
+                    <p class="text-muted small mb-0">Registro y control de egresos de la empresa.</p>
+                </div>
+                <div class="d-flex gap-2 flex-wrap">
+                    <a th:href="@{/gastos/nuevo}" class="btn btn-dark btn-sm">
+                        <i class="bi bi-plus-lg me-1"></i>Registrar gasto
+                    </a>
+                    <a th:href="@{/gastos/exportar-excel}" class="btn btn-success btn-sm">
+                        <i class="bi bi-file-earmark-excel me-1"></i>Excel
+                    </a>
+                </div>
+            </div>
+
+            <!-- Alertas flash -->
+            <div th:if="${successMsg}" class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="bi bi-check-circle me-2"></i>
+                <span th:text="${successMsg}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            <div th:if="${errorMsg}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="bi bi-exclamation-circle me-2"></i>
+                <span th:text="${errorMsg}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+
+            <!-- Tarjeta de total filtrado -->
+            <div class="card border-0 shadow-sm mb-4 bg-dark text-white">
+                <div class="card-body py-3 px-4 d-flex align-items-center justify-content-between">
+                    <div>
+                        <p class="mb-0 small opacity-75">Total mostrado</p>
+                        <h4 class="mb-0 fw-bold"
+                            th:text="'$ ' + ${#numbers.formatDecimal(totalFiltrado, 1, 'COMMA', 0, 'POINT')}">
+                            $ 0
+                        </h4>
+                    </div>
+                    <i class="bi bi-cash-stack fs-1 opacity-25"></i>
+                </div>
+            </div>
+
+            <!-- Filtros -->
+            <form th:action="@{/gastos}" method="get" class="row g-2 mb-4">
+                <div class="col-sm-5">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text bg-white"><i class="bi bi-search text-muted"></i></span>
+                        <input type="text" name="q" class="form-control"
+                               placeholder="Buscar por número, nombre, proveedor…"
+                               th:value="${q}">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <select name="categoria" class="form-select form-select-sm">
+                        <option value="">Todas las categorías</option>
+                        <option th:each="cat : ${categorias}"
+                                th:value="${cat.name()}"
+                                th:text="${cat.name()}"
+                                th:selected="${cat.name() == categoriaFiltro}">
+                        </option>
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-dark btn-sm">
+                        <i class="bi bi-funnel me-1"></i>Filtrar
+                    </button>
+                    <a th:href="@{/gastos}" class="btn btn-outline-secondary btn-sm ms-1">
+                        <i class="bi bi-x-lg me-1"></i>Limpiar
+                    </a>
+                </div>
+            </form>
+
+            <!-- Tabla de gastos -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Número</th>
+                                    <th>Nombre / Motivo</th>
+                                    <th>Categoría</th>
+                                    <th>Proveedor</th>
+                                    <th>Fecha Pago</th>
+                                    <th>Método</th>
+                                    <th class="text-end">Total</th>
+                                    <th class="text-end">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:if="${#lists.isEmpty(gastos)}">
+                                    <td colspan="8" class="text-center text-muted py-5">
+                                        <i class="bi bi-inbox fs-3 d-block mb-2"></i>
+                                        No se encontraron gastos registrados.
+                                    </td>
+                                </tr>
+                                <tr th:each="g : ${gastos}">
+                                    <td>
+                                        <a th:href="@{/gastos/{id}(id=${g.id})}"
+                                           class="fw-semibold text-dark text-decoration-none"
+                                           th:text="${g.numero}">GAS-0001</a>
+                                    </td>
+                                    <td th:text="${g.nombre}">—</td>
+                                    <td>
+                                        <span th:if="${g.categoria != null}"
+                                              th:switch="${g.categoria.name()}">
+                                            <span th:case="'NOMINA'"           class="badge bg-primary bg-opacity-75">NÓMINA</span>
+                                            <span th:case="'ARRIENDO'"         class="badge bg-warning text-dark">ARRIENDO</span>
+                                            <span th:case="'SERVICIOS_PUBLICOS'" class="badge bg-info text-dark">SERVICIOS</span>
+                                            <span th:case="'SUMINISTROS'"      class="badge bg-success bg-opacity-75">SUMINISTROS</span>
+                                            <span th:case="'MANTENIMIENTO'"    class="badge bg-secondary">MANT.</span>
+                                            <span th:case="'MARKETING'"        class="badge bg-danger bg-opacity-75">MARKETING</span>
+                                            <span th:case="'TRANSPORTE'"       class="badge bg-dark">TRANSPORTE</span>
+                                            <span th:case="'IMPUESTOS'"        class="badge bg-danger">IMPUESTOS</span>
+                                            <span th:case="*"                  class="badge bg-secondary" th:text="${g.categoria}"></span>
+                                        </span>
+                                    </td>
+                                    <td class="small text-muted"
+                                        th:text="${g.proveedor != null ? g.proveedor : '—'}">—</td>
+                                    <td class="small">
+                                        <span th:if="${g.fechaPago != null}"
+                                              th:text="${#temporals.format(g.fechaPago.toDate().toInstant().atZone(T(java.time.ZoneId).of('America/Bogota')), 'dd/MM/yyyy')}">—</span>
+                                        <span th:if="${g.fechaPago == null}">—</span>
+                                    </td>
+                                    <td>
+                                        <span th:if="${g.metodoPago != null}" th:switch="${g.metodoPago.name()}">
+                                            <span th:case="'EFECTIVO'"       class="badge bg-success bg-opacity-75">EFECTIVO</span>
+                                            <span th:case="'TRANSFERENCIA'"  class="badge bg-primary bg-opacity-75">TRANSF.</span>
+                                            <span th:case="'CHEQUE'"         class="badge bg-secondary">CHEQUE</span>
+                                            <span th:case="'TARJETA'"        class="badge bg-info text-dark">TARJETA</span>
+                                            <span th:case="*"                class="badge bg-secondary" th:text="${g.metodoPago}"></span>
+                                        </span>
+                                    </td>
+                                    <td class="text-end fw-semibold"
+                                        th:text="'$ ' + ${#numbers.formatDecimal(g.total, 1, 'COMMA', 0, 'POINT')}">$ 0</td>
+                                    <td class="text-end">
+                                        <div class="d-flex gap-1 justify-content-end">
+                                            <a th:href="@{/gastos/{id}(id=${g.id})}"
+                                               class="btn btn-sm btn-outline-dark" title="Ver detalle">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                            <a th:href="@{/gastos/{id}/editar(id=${g.id})}"
+                                               class="btn btn-sm btn-outline-secondary" title="Editar">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                            <form th:action="@{/gastos/{id}/eliminar(id=${g.id})}"
+                                                  method="post"
+                                                  sec:authorize="hasRole('ADMIN')"
+                                                  onsubmit="return confirm('¿Eliminar este gasto?')">
+                                                <button type="submit" class="btn btn-sm btn-outline-danger" title="Eliminar">
+                                                    <i class="bi bi-trash3"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /page-content -->
+    </div><!-- /wrapper -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

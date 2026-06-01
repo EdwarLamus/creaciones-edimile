@@ -319,6 +319,7 @@ body {
     background:     #FFFFFF;
     border:         1px solid var(--content-border) !important;
     transition:     transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    cursor:         pointer;
 }
 
 .module-card:hover {
@@ -388,179 +389,134 @@ body {
 }
 
 /* ================================================================
-   RESPONSIVE — ocultar sidebar en móvil
+   RESPONSIVE — Mobile First
    ================================================================ */
 
+/* Botón hamburguesa: oculto por defecto (desktop) */
+#sidebarToggle {
+    display: none;
+}
+
+/* Overlay oscuro para cerrar sidebar en móvil */
+.sidebar-overlay {
+    display:    none;
+    position:   fixed;
+    inset:      0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index:    1039;
+    cursor:     pointer;
+}
+
+/* ── Breakpoint tablet / móvil (< 768px) ── */
 @media (max-width: 767.98px) {
-    #sidebar {
-        width:    0;
-        overflow: hidden;
-        padding:  0;
+
+    /* Mostrar hamburguesa */
+    #sidebarToggle {
+        display:     flex;
+        align-items: center;
+        justify-content: center;
     }
+
+    /* Sidebar fuera de pantalla por defecto */
+    #sidebar {
+        transform:  translateX(-100%);
+        transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index:    1045;
+        overflow-y: auto;
+        /* mantiene width del sidebar */
+        width:      var(--sidebar-width) !important;
+    }
+
+    /* Sidebar visible cuando el body tiene la clase */
+    body.sidebar-open #sidebar {
+        transform: translateX(0);
+    }
+
+    /* Overlay visible cuando sidebar está abierto */
+    body.sidebar-open .sidebar-overlay {
+        display: block;
+    }
+
+    /* Área de contenido: ocupa todo el ancho */
     #page-content {
-        margin-left:  0;
-        padding-left: 1rem;
+        margin-left:   0 !important;
+        padding-left:  1rem;
         padding-right: 1rem;
+        padding-top:   calc(var(--navbar-height) + 1.25rem);
+    }
+
+    /* Tablas con scroll horizontal táctil */
+    .table-responsive {
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Encabezados de página: apilados verticalmente */
+    .page-header-row {
+        flex-direction: column !important;
+        align-items:    flex-start !important;
+        gap:            0.75rem;
+    }
+
+    /* Botones de tamaño mínimo para toque */
+    .btn {
+        min-height: 38px;
+    }
+
+    /* Filas de formulario: full width en móvil */
+    .row.g-4 > [class*="col-lg"] {
+        width: 100%;
+    }
+
+    /* Input group de búsqueda: ancho completo */
+    .search-bar {
+        max-width: 100% !important;
+    }
+
+    /* Formulario de cotización: tabla de ítems legible */
+    #tablaItems {
+        min-width: 580px;
+    }
+
+    /* Badge de estado en botones: no se pierda */
+    .badge {
+        font-size: 0.72rem;
+    }
+
+    /* Ocultar columnas secundarias de tabla en pantallas muy pequeñas */
+    .table .d-none-mobile {
+        display: none !important;
     }
 }
 
+/* ── Breakpoint muy pequeño (< 576px) ── */
+@media (max-width: 575.98px) {
 
-/* ---------------------------------------------------------------
-   Variables de color del sistema
-   --------------------------------------------------------------- */
-:root {
-    --sidebar-bg:    #1a1a2e;
-    --sidebar-width: 240px;
-    --accent:        #e94560;
-    --navbar-height: 56px;
-}
-
-/* ---------------------------------------------------------------
-   Navbar superior
-   --------------------------------------------------------------- */
-.navbar.fixed-top {
-    height: var(--navbar-height);
-}
-
-/* ---------------------------------------------------------------
-   Sidebar izquierdo
-   --------------------------------------------------------------- */
-#sidebar {
-    width: var(--sidebar-width);
-    min-height: 100vh;
-    background-color: var(--sidebar-bg);
-    position: fixed;
-    top: var(--navbar-height);
-    left: 0;
-    z-index: 1000;
-    padding-top: 0.5rem;
-    overflow-y: auto;
-}
-
-#sidebar .sidebar-link {
-    color: rgba(255, 255, 255, 0.70);
-    padding: 0.55rem 1rem;
-    border-radius: 8px;
-    margin: 2px 4px;
-    font-size: 0.875rem;
-    transition: background-color 0.15s, color 0.15s;
-}
-
-#sidebar .sidebar-link:hover {
-    color: #fff;
-    background-color: rgba(255, 255, 255, 0.10);
-}
-
-#sidebar .sidebar-link.active {
-    color: #fff;
-    background-color: var(--accent);
-}
-
-/* ---------------------------------------------------------------
-   Área de contenido principal
-   --------------------------------------------------------------- */
-#page-content {
-    margin-left: var(--sidebar-width);
-    padding-top: calc(var(--navbar-height) + 1.5rem);
-    min-height: 100vh;
-    background-color: #f8f9fa;
-}
-
-/* ---------------------------------------------------------------
-   Tarjetas de módulos en el Dashboard
-   --------------------------------------------------------------- */
-.module-card {
-    border-radius: 12px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.module-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12) !important;
-}
-
-.module-icon {
-    width: 60px;
-    height: 60px;
-    border-radius: 14px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.module-icon i {
-    font-size: 1.6rem;
-    color: #fff;
-}
-
-/* Avatar circular en tabla de usuarios */
-.avatar-circle {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.85rem;
-    font-weight: 600;
-    flex-shrink: 0;
-}
-
-/* ---------------------------------------------------------------
-   Página de Login
-   --------------------------------------------------------------- */
-.login-bg {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-}
-
-.login-wrapper {
-    width: 100%;
-    max-width: 440px;
-    padding: 1rem;
-}
-
-.login-card {
-    border-radius: 18px;
-}
-
-.login-icon {
-    width: 76px;
-    height: 76px;
-    background: linear-gradient(135deg, var(--accent), #0f3460);
-    border-radius: 50%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.login-icon i {
-    font-size: 2.2rem;
-    color: #fff;
-}
-
-.btn-login {
-    background: linear-gradient(135deg, var(--accent), #c0392b);
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    transition: opacity 0.2s;
-}
-
-.btn-login:hover {
-    opacity: 0.88;
-    color: #fff;
-}
-
-/* ---------------------------------------------------------------
-   Responsive: ocultar sidebar en móvil
-   --------------------------------------------------------------- */
-@media (max-width: 767.98px) {
-    #sidebar {
-        width: 0;
-        overflow: hidden;
-        padding: 0;
+    h3.fw-bold {
+        font-size: 1.2rem;
     }
-    #page-content {
-        margin-left: 0;
+
+    /* Compactar más los botones */
+    .btn-sm {
+        padding:   0.35rem 0.55rem;
+        font-size: 0.78rem;
     }
+
+    /* Total de cotización más legible */
+    #resTotal {
+        font-size: 1rem !important;
+    }
+
+    /* Cards sin padding lateral extra */
+    .card-body {
+        padding-left:  0.75rem;
+        padding-right: 0.75rem;
+    }
+}
+
+/* ----------------------------------------------------------------
+   Dropdowns dentro de tarjetas de cotización
+   Garantiza que el menú se dibuje por encima del contenido de abajo
+   ---------------------------------------------------------------- */
+.dropdown-menu {
+    z-index: 1055;
 }

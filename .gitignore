@@ -10,6 +10,13 @@ src/main/resources/firebase/creaciones-edimile-firebase-adminsdk-*.json
 src/main/resources/firebase/*adminsdk*.json
 
 # ----------------------------------------------------------------
+# CRÍTICO: Credenciales de correo y configuración sensible
+# ----------------------------------------------------------------
+src/main/resources/application.properties
+# Conservar la plantilla sin credenciales reales:
+!src/main/resources/application.properties.example
+
+# ----------------------------------------------------------------
 # Maven
 # ----------------------------------------------------------------
 target/
@@ -70,3 +77,9 @@ spring.log
 *.jar
 *.war
 *.ear
+
+# ----------------------------------------------------------------
+# Imágenes subidas por usuarios (no versionar)
+# ----------------------------------------------------------------
+uploads/*
+!uploads/.gitkeep

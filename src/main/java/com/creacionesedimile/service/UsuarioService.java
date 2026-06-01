@@ -109,4 +109,8 @@ public class UsuarioService {
     public boolean verificarContrasena(String passwordPlano, String hashAlmacenado) {
         return passwordEncoder.matches(passwordPlano, hashAlmacenado);
     }
+
+    public void eliminar(String id) {
+        usuarioRepository.delete(id);
+    }
 }

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${gasto.numero} + ' — Creaciones Edimile'">Detalle Gasto</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+</head>
+<body>
+
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <div class="d-flex" id="wrapper">
+        <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+        <div id="page-content" class="flex-grow-1">
+
+            <!-- Alertas flash -->
+            <div th:if="${successMsg}" class="alert alert-success alert-dismissible fade show mb-3" role="alert">
+                <i class="bi bi-check-circle me-2"></i>
+                <span th:text="${successMsg}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            <div th:if="${errorMsg}" class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
+                <i class="bi bi-exclamation-circle me-2"></i>
+                <span th:text="${errorMsg}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+
+            <!-- Cabecera del gasto -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header py-3 bg-dark text-white border-start border-5 border-warning">
+                    <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+                        <div>
+                            <h4 class="mb-1 fw-bold" th:text="${gasto.numero}">GAS-0001</h4>
+                            <p class="mb-1 fs-6 opacity-90" th:text="${gasto.nombre}">—</p>
+                            <!-- Badge de categoría -->
+                            <span th:if="${gasto.categoria != null}" th:switch="${gasto.categoria.name()}">
+                                <span th:case="'NOMINA'"              class="badge bg-primary">NÓMINA</span>
+                                <span th:case="'ARRIENDO'"            class="badge bg-warning text-dark">ARRIENDO</span>
+                                <span th:case="'SERVICIOS_PUBLICOS'"  class="badge bg-info text-dark">SERVICIOS PÚBLICOS</span>
+                                <span th:case="'SUMINISTROS'"         class="badge bg-success">SUMINISTROS</span>
+                                <span th:case="'MANTENIMIENTO'"       class="badge bg-secondary">MANTENIMIENTO</span>
+                                <span th:case="'MARKETING'"           class="badge bg-danger">MARKETING</span>
+                                <span th:case="'TRANSPORTE'"          class="badge bg-dark">TRANSPORTE</span>
+                                <span th:case="'IMPUESTOS'"           class="badge bg-danger bg-opacity-75">IMPUESTOS</span>
+                                <span th:case="*"                     class="badge bg-secondary" th:text="${gasto.categoria}"></span>
+                            </span>
+                        </div>
+                        <div class="text-end">
+                            <p class="mb-0 small opacity-75">Total pagado</p>
+                            <h3 class="mb-0 fw-bold text-warning"
+                                th:text="'$ ' + ${#numbers.formatDecimal(gasto.total, 1, 'COMMA', 0, 'POINT')}">
+                                $ 0
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <!-- Datos principales -->
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-header bg-dark text-white fw-semibold py-2">
+                            <i class="bi bi-info-circle me-1"></i>Datos del Gasto
+                        </div>
+                        <div class="card-body">
+                            <dl class="row mb-0 small">
+                                <dt class="col-sm-5 text-muted">Número</dt>
+                                <dd class="col-sm-7 fw-semibold" th:text="${gasto.numero}">—</dd>
+
+                                <dt class="col-sm-5 text-muted">Nombre / Motivo</dt>
+                                <dd class="col-sm-7" th:text="${gasto.nombre}">—</dd>
+
+                                <dt class="col-sm-5 text-muted">Descripción</dt>
+                                <dd class="col-sm-7"
+                                    th:text="${gasto.descripcion != null ? gasto.descripcion : '—'}">—</dd>
+
+                                <dt class="col-sm-5 text-muted">Categoría</dt>
+                                <dd class="col-sm-7"
+                                    th:text="${gasto.categoria != null ? gasto.categoria.name() : '—'}">—</dd>
+
+                                <dt class="col-sm-5 text-muted">Total</dt>
+                                <dd class="col-sm-7 fw-bold text-dark"
+                                    th:text="'$ ' + ${#numbers.formatDecimal(gasto.total, 1, 'COMMA', 0, 'POINT')}">—</dd>
+
+                                <dt class="col-sm-5 text-muted">Fecha de pago</dt>
+                                <dd class="col-sm-7">
+                                    <span th:if="${gasto.fechaPago != null}"
+                                          th:text="${#temporals.format(gasto.fechaPago.toDate().toInstant().atZone(T(java.time.ZoneId).of('America/Bogota')), 'dd/MM/yyyy')}">—</span>
+                                    <span th:if="${gasto.fechaPago == null}">—</span>
+                                </dd>
+
+                                <dt class="col-sm-5 text-muted">Método de pago</dt>
+                                <dd class="col-sm-7">
+                                    <span th:if="${gasto.metodoPago != null}" th:switch="${gasto.metodoPago.name()}">
+                                        <span th:case="'EFECTIVO'"      class="badge bg-success">EFECTIVO</span>
+                                        <span th:case="'TRANSFERENCIA'" class="badge bg-primary">TRANSFERENCIA</span>
+                                        <span th:case="'CHEQUE'"        class="badge bg-secondary">CHEQUE</span>
+                                        <span th:case="'TARJETA'"       class="badge bg-info text-dark">TARJETA</span>
+                                        <span th:case="*"               class="badge bg-secondary" th:text="${gasto.metodoPago}"></span>
+                                    </span>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Datos de proveedor y auditoría -->
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-header bg-dark text-white fw-semibold py-2">
+                            <i class="bi bi-building me-1"></i>Proveedor y Registro
+                        </div>
+                        <div class="card-body">
+                            <dl class="row mb-0 small">
+                                <dt class="col-sm-5 text-muted">Proveedor</dt>
+                                <dd class="col-sm-7 fw-semibold"
+                                    th:text="${gasto.proveedor != null ? gasto.proveedor : '—'}">—</dd>
+
+                                <dt class="col-sm-5 text-muted">Nro. Comprobante</dt>
+                                <dd class="col-sm-7"
+                                    th:text="${gasto.comprobante != null ? gasto.comprobante : '—'}">—</dd>
+
+                                <dt class="col-sm-5 text-muted">Registrado por</dt>
+                                <dd class="col-sm-7" th:text="${gasto.usuarioNombre}">—</dd>
+
+                                <dt class="col-sm-5 text-muted">Fecha registro</dt>
+                                <dd class="col-sm-7">
+                                    <span th:if="${gasto.fechaCreacion != null}"
+                                          th:text="${#temporals.format(gasto.fechaCreacion.toDate().toInstant().atZone(T(java.time.ZoneId).of('America/Bogota')), 'dd/MM/yyyy HH:mm')}">—</span>
+                                    <span th:if="${gasto.fechaCreacion == null}">—</span>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botones de navegación -->
+            <div class="d-flex gap-2 mt-4">
+                <a th:href="@{/gastos}" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left me-1"></i>Volver a gastos
+                </a>
+                <a th:href="@{/gastos/{id}/editar(id=${gasto.id})}" class="btn btn-outline-dark">
+                    <i class="bi bi-pencil me-1"></i>Editar
+                </a>
+                <form th:action="@{/gastos/{id}/eliminar(id=${gasto.id})}"
+                      method="post"
+                      sec:authorize="hasRole('ADMIN')"
+                      onsubmit="return confirm('¿Está seguro de eliminar este gasto? Esta acción no se puede deshacer.')">
+                    <button type="submit" class="btn btn-outline-danger">
+                        <i class="bi bi-trash3 me-1"></i>Eliminar
+                    </button>
+                </form>
+            </div>
+
+        </div><!-- /page-content -->
+    </div><!-- /wrapper -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
