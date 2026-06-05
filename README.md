@@ -70,12 +70,12 @@ La aplicación crea automáticamente el usuario administrador si Firestore está
 | 3 | Gestión de usuarios (Admin) | `/admin/usuarios/**` | ✅ Completo |
 | 4 | Recuperar contraseña | `/forgot-password`, `/reset-password` | ✅ Completo |
 | 5 | Perfil de usuario | `/perfil`, `/perfil/configuracion` | ✅ Completo |
-| 6 | Clientes | — | 🔲 Pendiente |
-| 7 | Catálogo de Productos | — | 🔲 Pendiente |
-| 8 | Inventario de Insumos | — | 🔲 Pendiente |
-| 9 | Cotizaciones | — | 🔲 Pendiente |
-| 10 | Ventas | — | 🔲 Pendiente |
-| 11 | Reportes | — | 🔲 Pendiente |
+| 6 | Clientes | `/clientes/**` | ✅ Completo |
+| 7 | Catálogo de Productos | `/productos/**` | ✅ Completo |
+| 8 | Inventario de Insumos | `/inventario/**` | ✅ Completo |
+| 9 | Cotizaciones | `/cotizaciones/**` | ✅ Completo |
+| 10 | Ventas | `/ventas/**` | ✅ Completo |
+| 11 | Reportes | `/reportes/**` | ✅ Completo |
 
 ---
 
